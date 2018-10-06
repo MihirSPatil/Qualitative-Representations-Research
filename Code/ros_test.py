@@ -81,28 +81,60 @@ if __name__ == "__main__":
         # creating input data, he basic data structure used in QSRlib is the World_Trace object
         world = World_Trace()
 
+        #check if the user has specified a csv file to read the input data from
+        if args.input:
 
-        #creating mulitple spatial entities with their respective poses, ids and sizes for mulitple timestamp everything is in terms of pixels
-        o1 = [Object_State(name="o1", timestamp=0, x=226, y=287., xsize=5., ysize=8.),
-              Object_State(name="o1", timestamp=1, x=308., y=289., xsize=5., ysize=8.),
-              Object_State(name="o1", timestamp=2, x=330., y=324., xsize=5., ysize=8.),
-              Object_State(name="o1", timestamp=3, x=387., y=349., xsize=5., ysize=8.)]
+            #creating a empty list to which we will append the data
+            obj = []
 
-        #creating a second spatial entity with different poses
-        o2 = [Object_State(name="o2", timestamp=0, x=500, y=330, xsize=5., ysize=8.),
-              Object_State(name="o2", timestamp=1, x=1026., y=262., xsize=5., ysize=8.),
-              Object_State(name="o2", timestamp=2, x=1144., y=247., xsize=5., ysize=8.),
-              Object_State(name="o2", timestamp=3, x=1268., y=262., xsize=5., ysize=8.)]
+            with open(args.input) as csvfile:
 
-        o3 = [Object_State(name="o3", timestamp=0, x=640., y=360., xsize=10, ysize=10),
-              Object_State(name="o3", timestamp=1, x=640, y=360., xsize=10, ysize=10),
-              Object_State(name="o3", timestamp=2, x=640., y=360, xsize=10, ysize=10),
-              Object_State(name="o3", timestamp=3, x=640., y=360., xsize=10, ysize=10)]
+                # creating a csv object to parse the info from the csv file
+                file = csv.DictReader(csvfile)
+                print("Reading file '%s':" % args.input)
 
-        #adding the objects(spatial entities) to the created World_Trace object
-        world.add_object_state_series(o1)
-        world.add_object_state_series(o2)
-        world.add_object_state_series(o3)
+                for idx,row in enumerate(file):
+
+                    # using the column headers to determine the object names and their pose and timestamp, the inbuilt csv index is used as a timestamp
+                    obj.append(Object_State(
+                        name=row['agent1'],
+                        timestamp=idx,
+                        x=float(row['x1']),
+                        y=float(row['y1'])
+                    ))
+                    obj.append(Object_State(
+                        name=row['agent2'],
+                        timestamp=idx,
+                        x=float(row['x2']),
+                        y=float(row['y2'])
+                    ))
+
+            #adding the objects(spatial entities) to the created World_Trace object
+            world.add_object_state_series(obj)
+
+        else:
+
+            #creating mulitple spatial entities with their respective poses, ids and sizes for mulitple timestamp everything is in terms of pixels
+            o1 = [Object_State(name="o1", timestamp=0, x=226, y=287., xsize=5., ysize=8.),
+                  Object_State(name="o1", timestamp=1, x=308., y=289., xsize=5., ysize=8.),
+                  Object_State(name="o1", timestamp=2, x=330., y=324., xsize=5., ysize=8.),
+                  Object_State(name="o1", timestamp=3, x=387., y=349., xsize=5., ysize=8.)]
+
+            #creating a second spatial entity with different poses
+            o2 = [Object_State(name="o2", timestamp=0, x=500, y=330, xsize=5., ysize=8.),
+                  Object_State(name="o2", timestamp=1, x=1026., y=262., xsize=5., ysize=8.),
+                  Object_State(name="o2", timestamp=2, x=1144., y=247., xsize=5., ysize=8.),
+                  Object_State(name="o2", timestamp=3, x=1268., y=262., xsize=5., ysize=8.)]
+
+            o3 = [Object_State(name="o3", timestamp=0, x=640., y=360., xsize=10, ysize=10),
+                  Object_State(name="o3", timestamp=1, x=640, y=360., xsize=10, ysize=10),
+                  Object_State(name="o3", timestamp=2, x=640., y=360, xsize=10, ysize=10),
+                  Object_State(name="o3", timestamp=3, x=640., y=360., xsize=10, ysize=10)]
+
+            #adding the objects(spatial entities) to the created World_Trace object
+            world.add_object_state_series(o1)
+            world.add_object_state_series(o2)
+            world.add_object_state_series(o3)
 
 
         #setting the distance values to be used with the argd qualitative calculi

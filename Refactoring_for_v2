@@ -1,0 +1,57 @@
+
+#==========================================Code to refactor====================================================#
+#code to read data from a csv input file
+'''
+if args.input:
+    ob = []
+    with open(args.input) as csvfile:
+        reader = csv.DictReader(csvfile)
+        print("Reading file '%s':" % args.input)
+        for idx,row in enumerate(reader):
+            ob.append(Object_State(
+                name=row['agent1'],
+                timestamp=idx,
+                x=float(row['x1']),
+                y=float(row['y1'])
+            ))
+            ob.append(Object_State(
+                name=row['agent2'],
+                timestamp=idx,
+                x=float(row['x2']),
+                y=float(row['y2'])
+            ))
+
+    world.add_object_state_series(ob)
+'''
+
+#code to check for extra arguments for the qtcbcs
+'''        dynamic_args = {which_qsr: {
+            "quantisation_factor": args.quantisation_factor,
+            "distance_threshold": args.distance_threshold,
+            "validate": args.validate,
+            "no_collapse": args.no_collapse
+        }}
+'''
+
+#can add user defined arguments for a distance threshold with qtcbcs
+'''
+  #these thresholds are in pixels as is everything else
+	args.distance_threshold = {"touch":1, "near":3, "medium":5, "far":10}
+
+    #we can specify the objects for which to calculate the relations as such, may not be needed if we are calculating for all objects
+    #can be declared as global variables
+    	qtcbs_qsrs_for = [("o1", "o2"), ("o1", "o3"), ("o2", "o3")]
+    	argd_qsrs_for = [("o1", "o2")]
+    	mos_qsrs_for = ["o1", "o2"]
+
+    #this is a combination of qtcbs, argd and mos(moving or stationary)
+    dynamic_args = {"qtcbs": {"quantisation_factor": args.quantisation_factor,
+							  "validate": args.validate,
+							  "no_collapse": args.no_collapse,
+							  "qsrs_for": qtcbs_qsrs_for},
+
+					"argd": {"qsr_relations_and_values": args.distance_threshold,
+							  "qsrs_for": argd_qsrs_for},
+
+					"mos": {"qsrs_for": mos_qsrs_for}}
+'''

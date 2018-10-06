@@ -36,6 +36,7 @@ def pretty_print_world_qsr_trace(which_qsr, qsrlib_response_message):
 
 #create a Qsrlib() object
 qsrlib = QSRlib()
+
 #creates a argparse object, which will be used to read from the terminal as well as check the arguments
 parser = argparse.ArgumentParser(description='Get a Qualitative Spatial Representation ')
 

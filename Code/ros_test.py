@@ -138,7 +138,7 @@ if __name__ == "__main__":
 
 
         #setting the distance values to be used with the argd qualitative calculi
-        distance = {"0": 4., "1": 8., "2": 12., "3":16.}
+        distance = {"touch": 8., "near": 16., "medium": 32., "far":64.}
 
         # setting dynamic arguments for the argd qualitative calculi
         dynamic_args = {"argd": {"qsr_relations_and_values":distance}}

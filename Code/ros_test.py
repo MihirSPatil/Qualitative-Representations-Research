@@ -67,7 +67,9 @@ if __name__ == "__main__":
     parser.add_argument("--validate", help="validate state chain. Only QTC", action="store_true")
 
     #this argument is used to specify the distance threshold at which the switch from qtcb to qtcc should occur
-    # parser.add_argument("--distance_threshold", help="distance threshold for qtcb <-> qtcc transition. Only QTCBC", type=float)
+    parser.add_argument("--distance_threshold", help="distance threshold for qtcb <-> qtcc transition. Only QTCBC", type=float)
+
+    #argument that provides the option of running the code using ROS
     parser.add_argument("--ros", action="store_true", default=False, help="Use ROS eco-system")
 
     #this reads the input from the terminal by using the parse_args() function
@@ -141,7 +143,9 @@ if __name__ == "__main__":
         distance = {"touch": 8., "near": 16., "medium": 32., "far":64.}
 
         # setting dynamic arguments for the argd qualitative calculi
-        dynamic_args = {"argd": {"qsr_relations_and_values":distance}}
+        dynamic_args = {"argd": {"qsr_relations_and_values":distance}
+                        "qtcbcs":{"distance_threshold":args.distance_threshold,
+                                  "validate":args.validate}}
 
         #creating the request message containing the data about the selected qsr and the world
         qsrlib_request_message = QSRlib_Request_Message(which_qsr=input_qsr, input_data=world, dynamic_args=dynamic_args)

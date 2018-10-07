@@ -47,7 +47,7 @@ if __name__ == "__main__":
     #one way of defining multiple qsr's for computing spatial relationships, if using this method add '+["multiple"]' to options line above
     # multiple = options[:]; multiple.remove("multiple"); multiple.remove("argprobd"); multiple.remove("cardir"); multiple.remove("mwe"); multiple.remove("qtcbs"); multiple.remove("qtccs"); multiple.remove("rcc2"); multiple.remove("rcc3"); multiple.remove("rcc4"); multiple.remove("ra"); multiple.remove("tpcc"); multiple.remove("rcc8");
 
-    #defining the qsr's for which to calculate the spatial realtionships
+    #defining the qsr's for which to calculate the spatial realtionships, can change the selected qsr's by just changing the index nos.
     multiple = options[0], options[5], options[12]
 
     #converting the tuple to a list
@@ -143,7 +143,7 @@ if __name__ == "__main__":
         distance = {"touch": 8., "near": 16., "medium": 32., "far":64.}
 
         # setting dynamic arguments for the argd qualitative calculi
-        dynamic_args = {"argd": {"qsr_relations_and_values":distance}
+        dynamic_args = {"argd": {"qsr_relations_and_values":distance},
                         "qtcbcs":{"distance_threshold":args.distance_threshold,
                                   "validate":args.validate}}
 

@@ -1,0 +1,25 @@
+
+#==================Just a few extra code snippets that can be used with qtcbcs and argd=====================#
+
+#code to check for extra arguments for the qtcbcs
+'''        dynamic_args = {which_qsr: {
+            "quantisation_factor": args.quantisation_factor,
+            "distance_threshold": args.distance_threshold,
+            "validate": args.validate,
+            "no_collapse": args.no_collapse
+        }}
+'''
+
+#can add user defined arguments for a distance threshold with qtcbcs and argd
+'''
+  #these thresholds are in pixels as is everything else, we can use argparse to let the user decide if he wants to use the distance_threshold
+	args.distance_threshold = {"touch":1, "near":3, "medium":5, "far":10}
+
+    #we can specify the objects for which to calculate the relations as such, may not be needed if we are calculating for all objects
+    #can be declared as global variables
+    	qtcbs_qsrs_for = [("o1", "o2"), ("o1", "o3"), ("o2", "o3")]
+    	argd_qsrs_for = [("o1", "o2")]
+    	mos_qsrs_for = ["o1", "o2"]
+
+'''
+#=============================================================================================================#

@@ -1,7 +1,27 @@
 %!TEX root = ../PatilM-[RnD-MT]Report.tex
 
 \chapter{Introduction}
-I'mma gonna write my intro here
+%Qualitative spatial and temporal representations constitute a class of symbolic approaches to capture aspects of spatial or temporal knowledge important for a task at hand, typically choosing a common sense level of abstraction \cite{cohn2008qualitative}
+\paragraph{}  Perception and control are two essential components of any successful robot navigation system. While perception deals with the spatial representations of the environment as perceived by the robot, control derives the required parameters necessary for navigation based on the perceived data. Traditionally such a task of navigation is achieved using quantitative approaches involving precise numerical information.Though useful such precise representations may not always be a prerequisite \cite{blackwell1988spatial} \cite{shah2013qualitative}.
+\paragraph{} Consider the case of a robot tasked with driving along a corridor towards the end without colliding with the walls. In such a scenario where precise perception and control are deemed surplus to requirements,the robot  can be controlled using qualitative inputs in the context of an approximate map(spatial representations) \cite{shah2013qualitative}. The significant benefit of using a qualitative representation is that we no longer trying to follow a pre-planned, precise trajectory. Therefore eliminating the need to constantly issue control commands. This implies that a qualitative approach would be more efficient \cite{chen2015survey} (in terms of CPU usage \cite{wakita1995intelligent}, battery usage etc.).
+\paragraph{} Furthermore, humans often communicate basic navigation tasks to each other using approximate spatial relationships to observable landmarks \cite{michon2001and} \cite{chen2015survey} ,without requiring a precise map (for example, ‘walk past the computers and take a left at the elevator’) \cite{shah2013qualitative}. Hence by using qualitative representations we would be emulating a similar communication pattern which in turn facilitates a better human robot interaction \cite{dondrup2015computational}. 
+
+\begin{itemize}   
+	%    \item \textcolor{blue}{Why is it important?} 
+	
+	\item Qualitative representations(calculi) are useful in cases such as dynamic environments \cite{fraser2004application}, where precise metric maps or precise trajectories often/may fail due to the constant and often unprecedented changes to the environment \cite{shah2013qualitative}.
+	
+	\item Qualitative calculi can be used to make simple and intuitive inferences that can be used to achieve robust control(navigation) \cite{cohn2008qualitative} \cite{kuipers1991robot} of a mobile platform.
+	
+	\newpage
+	
+	\item Most robot navigation tasks are composed of two basic steps,namely precise perception to localize the mobile robot on a given map and the control the platform along the precisely generated trajectory. While this approach works successfully in a number of cases it is not necessarily efficient \cite{mcclelland2016qualitative} especially in terms of the continuous monitoring of the path by issuing a prolix of control commands.
+	
+	\item High level robot programming should be carried out without having to refer to numeric data. Ideally, a robot programmer should describe the task to the robot in terms that they would use to describe it when doing it themselves (``task-level'' programming). People do not naturally think of physical actions in terms of joint angles or numeric co-ordinates, so high level robot programming should be done in non-numeric terms \cite{blackwell1988spatial}.
+	
+	\item Qualitative calculi exhibit a step forward in the direction of generalizing 2-D space \cite{blackwell1988spatial} for use in various robotic tasks such as navigation \cite{mcclelland2016qualitative} \cite{cohn2008qualitative} and control.
+\end{itemize}
+
 
 \section{Motivation}
 \subsection{...}

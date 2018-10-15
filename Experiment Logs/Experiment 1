@@ -1,0 +1,41 @@
+Experiment 1: Collecting Video data streams for later testing and analysis
+
+Expected Results:
+*Video Data with robot ego-motion
+*Data about the most favorable placement of AruCo markers
+*Camera Matrix for Youbot
+*Favorable speed for robot motion
+
+Experiment Variables:
+*Lighting conditions
+*Noisy motion of the robot
+*Speed of the robot
+*Marker placement
+*Robot Environment
+*Battery Runtime
+*Occluded Markers
+
+Software Requirements:
+*ROS
+*Python
+*OpenCv
+
+Hardware Requirements:
+*Youbot
+*Camera
+*Robot controller
+
+Procedure:
+*ssh into the Youbot
+*Initialize and set-up the workspace
+*Launch Rviz and roscore
+*Launch the mir_bringup node - this launches both the camera as well as the navigation capabilities of the Youbot
+*Use the controller to guide the Youbot into a suitable starting position
+*start recording the experiment and create bag files using rosbag record with the appropriate topics
+*record the data regarding speed and video feedback for various motions such as staggered motion, center of the corridor, along the walls and crashing into the wall, diagonal motion across the corridor.
+*copy the recorded bagfiles to a local drive
+*kill all the running nodes after finishing the experiment and docking the Youbot back into its station
+
+Time: 17:00 - 18:00 hrs
+Date: 12/10/2018
+People Involved: Mihir Patil, Santosh Thoduka

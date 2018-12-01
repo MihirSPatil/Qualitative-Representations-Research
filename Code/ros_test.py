@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # multiple = options[:]; multiple.remove("multiple"); multiple.remove("argprobd"); multiple.remove("cardir"); multiple.remove("mwe"); multiple.remove("qtcbs"); multiple.remove("qtccs"); multiple.remove("rcc2"); multiple.remove("rcc3"); multiple.remove("rcc4"); multiple.remove("ra"); multiple.remove("tpcc"); multiple.remove("rcc8");
 
     #defining the qsr's for which to calculate the spatial realtionships, can change the selected qsr's by just changing the index nos.
-    multiple = options[0], options[5], options[12]
+    multiple = options[0], options[6]
 
     #converting the tuple to a list
     multiple = list(multiple)
@@ -144,8 +144,8 @@ if __name__ == "__main__":
 
         # setting dynamic arguments for the argd qualitative calculi
         dynamic_args = {"argd": {"qsr_relations_and_values":distance},
-                        "qtcbcs":{"distance_threshold":args.distance_threshold,
-                                  "validate":args.validate}}
+                        "qtcbs":{"quantisation_factor":0.01,
+                        "no_collapse":True}}
 
         #creating the request message containing the data about the selected qsr and the world
         qsrlib_request_message = QSRlib_Request_Message(which_qsr=input_qsr, input_data=world, dynamic_args=dynamic_args)

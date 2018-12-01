@@ -1,0 +1,8 @@
+<launch>
+  <node name="extractor" pkg="qsr_nav" type="pose_extractor.py" />
+  <node name="relation_builder" pkg="qsr_lib" type="qsrlib_ros_server.py" />
+  <node name="interpreter" pkg="qsr_nav" type="qtc_interpreter.py" />
+  <!-- <node type="rviz" name="rviz" pkg="rviz" args="-d $(find qsr_nav)/rviz_config.rviz" /> -->
+  <node name ="ruleset" pkg ="qsr_nav" type="qtcb_ruleset.py" />
+  <node name ="velocity_controller" pkg ="qsr_nav" type="vel_control.py" output="screen" />
+</launch>

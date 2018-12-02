@@ -10,7 +10,7 @@ import numpy as np
 import cv2.aruco as aruco
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
-from qsr_nav.msg import PoseMsg
+from qsr_nav.msg import *
 
 class pose_extractor:
 
@@ -18,6 +18,8 @@ class pose_extractor:
     self.image_pub = rospy.Publisher("image_topic",Image,queue_size=2)
     self.markerpose_pub1 = rospy.Publisher('extracted_pose1',PoseMsg,queue_size=2)
     self.markerpose_pub2 = rospy.Publisher('extracted_pose2',PoseMsg,queue_size=2)
+    self.init_vel_pub = rospy.Publisher('init_vel',VelMsg,queue_size=2)
+
 
     self.bridge = CvBridge()
     self.image_sub = rospy.Subscriber("arm_cam3d/rgb/image_raw",Image,self.img_callback)
@@ -75,8 +77,12 @@ class pose_extractor:
             # print(self.pub_flag)
             # print("publisher 1 id:", poseExtracted.marker_id)
             # print('prev_marker_id',self.prev_marker_id)
+    else:
+        init_vel = VelMsg()
+        init_vel.vel_cmd = "Start"
+        self.init_vel_pub.publish(init_vel)
 
-        print(poseExtracted)
+        # print(poseExtracted)
 
     '''commment the following lines to stop seeing the image output in a seperate window'''
 

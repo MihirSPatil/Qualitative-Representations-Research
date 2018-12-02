@@ -25,6 +25,7 @@ class pose_extractor:
     self.image_sub = rospy.Subscriber("arm_cam3d/rgb/image_raw",Image,self.img_callback)
     self.prev_marker_id = None
     self.pub_flag = True
+    self.init_flag = False
     # marker length in meters
     self.marker_length = .22
     self.distortion_coeffs = np.array([0.0, 0.0, 0.0, 0.0, 0.0])
@@ -78,9 +79,11 @@ class pose_extractor:
             # print("publisher 1 id:", poseExtracted.marker_id)
             # print('prev_marker_id',self.prev_marker_id)
     else:
+        if self.init_flag == False:
         init_vel = VelMsg()
         init_vel.vel_cmd = "Start"
         self.init_vel_pub.publish(init_vel)
+        self.init_flag = True
 
         # print(poseExtracted)
 

@@ -80,10 +80,10 @@ class pose_extractor:
             # print('prev_marker_id',self.prev_marker_id)
     else:
         if self.init_flag == False:
-        init_vel = VelMsg()
-        init_vel.vel_cmd = "Start"
-        self.init_vel_pub.publish(init_vel)
-        self.init_flag = True
+            init_vel = VelMsg()
+            init_vel.vel_cmd = "Start"
+            self.init_vel_pub.publish(init_vel)
+            self.init_flag = True
 
         # print(poseExtracted)
 

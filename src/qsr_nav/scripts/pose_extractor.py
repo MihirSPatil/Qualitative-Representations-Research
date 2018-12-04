@@ -49,8 +49,8 @@ class pose_extractor:
         poseExtracted.pose_vec.position.x = tvec[0][0][0]
         poseExtracted.pose_vec.position.y = tvec[0][0][1]
         poseExtracted.pose_vec.position.z = tvec[0][0][2]
-        # poseExtracted.header.stamp = rospy.Time.now()
-        poseExtracted.header = data.header
+        poseExtracted.header.stamp = rospy.Time.now()
+        # poseExtracted.header = data.header
 
         if (self.prev_marker_id is None and self.pub_flag is True):
             poseExtracted.marker_id = ids[0][0]

@@ -1,5 +1,5 @@
 <launch>
-  <remap from="twist2" to="cmd_vel_safe" />
+  <remap from="twist2" to="cmd_vel_prio_low" />
   <node name="extractor" pkg="qsr_nav" type="pose_extractor.py" />
   <node name="relation_builder" pkg="qsr_lib" type="qsrlib_ros_server.py" />
   <node name="interpreter" pkg="qsr_nav" type="qtc_interpreter.py" />

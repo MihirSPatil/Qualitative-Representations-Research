@@ -89,13 +89,13 @@ class pose_extractor:
 
     '''commment the following lines to stop seeing the image output in a seperate window'''
 
-    cv.imshow("Image window", frame)
-    self.keystroke = cv.waitKey(1)
-    if 32 <= self.keystroke and self.keystroke < 128:
-        cc = chr(self.keystroke).lower()
-        if cc == 'q':
-            # The user has press the q key, so exit
-            rospy.signal_shutdown("User hit q key to quit.")
+    # cv.imshow("Image window", frame)
+    # self.keystroke = cv.waitKey(1)
+    # if 32 <= self.keystroke and self.keystroke < 128:
+    #     cc = chr(self.keystroke).lower()
+    #     if cc == 'q':
+    #         # The user has press the q key, so exit
+    #         rospy.signal_shutdown("User hit q key to quit.")
 
 
 def main(args):

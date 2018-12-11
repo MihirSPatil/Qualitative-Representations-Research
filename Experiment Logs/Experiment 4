@@ -1,9 +1,10 @@
-Experiment 2 : Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment 
+Experiment 4 : Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment 
 
 Expected Results: 
 *Succesful navigation of the corridor while avoiding collision with the walls.
 *A highly discontinuous motion profile with jerky motion.
 *A video log of the performed experiment.
+*A collision case when moving too close to the walls
 
 
 Experiment Variables:
@@ -54,11 +55,11 @@ Procedure:
 
 
 Obtained Results and Analysis:
-*When starting from a central postion along the corridor, the robot managed to successfully navigate the corridor.
+*When starting from a position close to the left wall such that the robot can still see both the markers, the robot managed to successfully navigate the corridor.
 *The motion profile is smooth and not jerky as previously thought.
-*The robot maintains a path that is along the center of the corridor.
-*No collision cases were observed.
-*It remains crucial to the algorithm that atleast two markers are detected simultaneously, when placed along the same axis.
+*The robot tries to move towards the center of the corridor.
+*Collision occurs when the robot is too close to either of the walls as the opposite set of markers goes out of the FOV of the camera and hence no update to the robot's motion can be made.
+*It remains crucial to the algorithm that atleast two markers are detected simultaneously, when placed along the same axis or otherwise. In cases where two opposing markers cannot be observed simultaneously the collision is imminent.
 
 
 Time:

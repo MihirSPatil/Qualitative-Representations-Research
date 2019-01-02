@@ -27,10 +27,10 @@
 		
 		\begin{figure}[h!]%
 			\centering
-			\subfloat[Cone-shaped direction relations \cite{isli1}]{{\includegraphics[width=6cm]{images/direction_cone} }}%
+			\subfloat[Cone-shaped direction relations \cite{isli2000new}]{{\includegraphics[width=6cm]{images/direction_cone} }}%
 			\qquad
-			\subfloat[Projection-based direction relations \cite{isli2}]{{\includegraphics[width=6cm]{images/direction_projection} }}%
-			\caption{The point based and projection based direction representations \cite{bibid}}%
+			\subfloat[Projection-based direction relations \cite{isli2001combining}]{{\includegraphics[width=6cm]{images/direction_projection} }}%
+			\caption{The point based and projection based direction representations \cite{chen2015survey}}%
 			\label{fig:example}%
 		\end{figure}
 	
@@ -45,7 +45,8 @@
 		\end{figure}
 		
 		
-		\subsection{Moving object Representations} \cite{chen2015survey} : Topological representations, directional representations and distance representations describe relations between stationary objects, this limitation encouraged the development of a moving object representation which can qualitatively represent moving objects and their trajectories. These representations effectively deal with both spatial and temporal data to describe valid relations among mobile objects, while these relations include some directional information they mainly describe the relative motion between two objects and not relative direction. The relative motion between two objects is described using oriented line segments which are approximations of the trajectory of the objects in motion. QTC, QRPC are the two prominent calculi that utilize moving object representations. Moving object representations and the calculi using these representations have been proven to have solved the problem of representing moving objects but since these relations lack any distance information, they are still prone to failure and often need a complimentary distance calculi to ensure that a mobile object(robot) can successfully move around in the given environment without collisions.
+		\subsection{Moving object Representations} \cite{chen2015survey} : Topological representations, directional representations
+		 and distance representations describe relations between stationary objects, this limitation encouraged the development of a moving object representation which can qualitatively represent moving objects and their trajectories. These representations effectively deal with both spatial and temporal data to describe valid relations among mobile objects, while these relations include some directional information they mainly describe the relative motion between two objects and not relative direction. The relative motion between two objects is described using oriented line segments which are approximations of the trajectory of the objects in motion. QTC, QRPC are the two prominent calculi that utilize moving object representations. Moving object representations and the calculi using these representations have been proven to have solved the problem of representing moving objects but since these relations lack any distance information, they are still prone to failure and often need a complimentary distance calculi to ensure that a mobile object(robot) can successfully move around in the given environment without collisions.
 		
 		\begin{figure}[h]
 			\centering
@@ -261,16 +262,23 @@
 	
 	\paragraph{Conclusion}Since the applicability of the distance approach does not depend upon the number of distance relations, it allows the distance calculus to be highly adaptive to the users demands and hence provides a feasible alternative to collision free navigation in mobile objects. Also as mentioned previously the distance representation effectively divides the physical regions around the object into geometric intervals, hence making this approach suitable to define distance thresholds around the robot to avoid collisions with other objects as well as define a suitable safe region around the robot, which in-turn ensures safe movement in the physical space. These benefits of the qualitative distance calculi make it favorable to our application, hence warranting it's utilization \cite{clementini1997qualitative}, \cite{lowe1975geography}.
 
-	\section{Implementations utilizing qualitative calculi for navigation in robots}
+	\section{Implementations utilizing qualitative representations for navigation in robots}
+	\paragraph{} The goal of this section is to introduce the reader to the existing approaches that use qualitative spatial representations in some capacity to achieve efficient and collision free navigation in mobile robots. The merits and de-merits of each implementation is recognized and a brief summary is constructed based upon the same.
 	
 	\begin{itemize}
-	\item \cite{chen2006qualitative}, utilizes a teach-relay approach to navigate through indoor and outdoor environments. A sparse optical flow technique is used to extract features in the teach phase and feature matching is done in the replay phase to successfully navigate a given path. The approach uses a qualitative control strategy where motion primitives are obtained by using a voting mechanism in collaboration with the observed features.
+	\item \cite{chen2006qualitative}, This approach relies heavily on the detection of tangible features in two sets of images one of which is a reference image that is taken during a teach phase(when the robot is taken manually through the desired path and allowed to take reference images through out it's path traversal) and a second image that is taken during a replay phase during which the robot is allowed to navigate the desired path by itself, capturing new images all along. The features in both these images are detected and tracked using the Kanade-Lucas-Tomasi \cite{birchfield2007klt} feature tracker. The tracked features in the current image(taken during the replay phase) are compared with the features observed in the reference image(taken during the teach phase) and the difference in their positions and distance is used to make qualitative decisions regarding the corrections that have to be made to the robot's path with respect to the desired path.
+	The underlying spatial entity that is compared is the corresponding distance between the tracked features (in both the reference and the current image and the reference image) with respect to a common principal point of the images. Based on this conditions the decisions are made as follows:
+	\begin{itemize}
+		\item if the robot is moving from point A to B without deviating from the original path, then continue the current path until some deviation occurs.
+		\item if the robot deviates laterally from the desired path and this is indicated in the signed distances between the features of the current and reference image, then:
+		\begin{itemize}
+			\item if the distance between the reference feature lying on the left/right of the image and the principle point is more than the distance between the current feature lying on the left/right of the image and the principle point then move left or right respectively.
+			\item if the signed distance of the feature lying on the left/right of the image does not match with the sign of the feature lying on the left/right of the reference image then move right or left respectively.
+		\end{itemize}
+	\end{itemize} 
+	\paragraph{Conclusion}The merits of such an feature based approach seem to be apparent, yet this approach does not utilize any of the traditionally accepted qualitative calculi. Furthermore it's reliance on a teaching phase renders it invalid in cases where prior information about the environment is denied to the robot. The dependence on further factors such as lighting conditions, detection of features and inability to work efficiently in an outdoor environment(due to lack of contrast the features are not detected) show that this is a highly constrained approach that can work only if a large amount of prerequisites are satisfied. The merit of this approach is still it's ability to function exceptionally well when the teach phase is executed properly, with the robot able to follow trajectories upto a 100 meters easily. The authors also mention the apparent improvement in efficiency(in terms of 	reduced cost and power consumption as well as increased robustness) when using such qualitative approaches,  but fail to provide empirical proof for such statements.
 	
 	\item \cite{chen2009qualitative},develops a qualitative control algorithm that is able to navigate through both indoor and outdoor environments by using a concept called funnel lane, where the feature coordinates are used to determine turning directions in the replay phase. The algorithm couples odometry information with the funnel lane approach to achieve robust navigation.
-	
-	\item \cite{sarcinelli2002using} The research presented in this approach uses optical flow vectors in combination with a confidence measure to control the linear and angular speeds of the robot. Image segmentation is used to split the scene into different objects and a estimation of time of collision for each object is used as a confidence measure for the control commands.
-	
-	\item \cite{murali2008autonomous} This approach uses a single monocular gray-scale camera to navigate. The algorithm uses a combination of visual homing and corridor ceiling lights to perform straight-line navigation in an unknown corridor. Although this approach works with both textured and untextured environments it uses a kalman filter(quantitative approach) to achieve localization.
 
 \end{itemize}
 

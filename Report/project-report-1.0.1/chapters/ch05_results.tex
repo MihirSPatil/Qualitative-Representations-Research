@@ -76,18 +76,89 @@
 	\item Asus Xtion Pro camera
 \end{itemize}
 
-\section{Experiments}
-\paragraph{1. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment}
-\paragraph{2. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment}
-\paragraph{3. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment }
-\paragraph{4. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment}
-\paragraph{5. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment }
-\paragraph{6. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment }
-\paragraph{7. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment with varied marker placements}
-\paragraph{8. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment with varied marker placements}
-\paragraph{9. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment with varied marker placements}
-\paragraph{10. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment with varied marker placements}
-\paragraph{11. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment with varied marker placements}
-\paragraph{12. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment with varied marker placements}
-\section{Conclusion}
+ 
 
+\section{Experiments}
+ 
+\subsection{Experiments for QTCB calculi}
+\subsubsection{Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment} 
+\paragraph{}The individual experiments and their respective analysis have been presented in a tabular format in the figures 5.1, 5.2 and 5.3.
+%\subsubsection*{Starting from a position along the center of the corridor}
+
+\begin{sidewaysfigure}[h!]
+	\includegraphics[scale = 0.6]{images/center}
+	\caption{Table of conducted experiments for $QTC_B$ and their respective analysis for a starting position that is along the center of the corridor.}
+	\label{fig:center}
+\end{sidewaysfigure}
+
+
+%\subsubsection*{Starting from a position along the right wall of the corridor}
+\begin{sidewaysfigure}[h!]
+	\includegraphics[scale = 0.6]{"images/right table"}
+	\caption{Table of conducted experiments for $QTC_B$ and their respective analysis for a starting position that is along the right wall of the corridor.}
+	\label{fig:right-table}
+\end{sidewaysfigure}
+
+
+%\subsubsection*{Starting from a position along the left wall of the corridor}
+\begin{sidewaysfigure}[h!]
+	\includegraphics[scale = 0.6]{images/left_table}
+	\caption{Table of conducted experiments for $QTC_B$ and their respective analysis for a starting position that is along the left wall of the corridor.}
+	\label{fig:left-table}
+\end{sidewaysfigure}
+
+\subsubsection*{Evaluation} From the experiment tables presented in the following figures(5.1,5.2,5.3) it is clear to see that the main reason for failure of the QTCB calculus is the limited FOV of the camera used. Also the tabular structure makes it clear to understand that the the algorithm is robust enough to function with an arbitrary number and placement of the markers with the only failure occurring when it cannot detect atleast two markers placed on opposite walls. Additionally out of all the test scenarios the only clear failure(irrespective of starting position) of the algorithm was when the markers were placed in a staggered manner along the walls, this was also due to the fact that the camera's FOV is limited and prevented it from detecting both the markers at all instances of time. All the experiments were carried out such that they travel from point `A' to `B' and back from `B' to `A' this was done to ensure that the detection component isn't favorable to any one side or travel and is robust enough to function even if the markers on the opposing walls were interchanged. Out of a set of 12 experiments conducted the QTCB representation was able to perform collision free navigation in all but 1 set of experiments giving it a success rate of 83.3 percent.
+
+\subsection{Experiments for ARGD calculi}
+\subsubsection{Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment} 
+\paragraph{}The individual experiments and their respective analysis have been presented in a tabular format in the figures 5.4, 5.5 and 5.6. For the ARGD calculus the distance thresholds used for discretizing continuous space are an additional experiment variable that affects the representation of physical space.
+
+\begin{sidewaysfigure}[h!]
+	\centering
+	\includegraphics[scale = 0.6]{images/argd_center}
+	\caption{Table of conducted experiments for $ARGD$ and their respective analysis for a starting position that is along the center of the corridor.}
+	\label{fig:argdcenter}
+\end{sidewaysfigure}
+
+
+\begin{sidewaysfigure}[h!]
+	\centering
+	\includegraphics[scale = 0.6]{images/argd_right}
+	\caption{Table of conducted experiments for $ARGD$ and their respective analysis for a starting position that is along the right wall of the corridor.}
+	\label{fig:argdright}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}[h!]
+	\centering
+	\includegraphics[scale = 0.6]{images/argd_left}
+	\caption{Table of conducted experiments for $ARGD$ and their respective analysis for a starting position that is along the left wall of the corridor.}
+	\label{fig:argdleft}
+\end{sidewaysfigure}
+ 
+\subsubsection*{Evaluation} From the experiment tables presented in the following figures(5.4, 5.5, 5.6) it is clear to see that there are two main reasons for failure of the ARGD calculus, the first is the limited FOV of the camera used and the second is the inability of the calculi to distinguish between two objects that lie in the same distance threshold due to this the number of failure cases is higher for the ARGD when compared to the $QTC_B$. Also the tabular structure makes it clear to understand that the the algorithm isn't robust enough to function with any arbitrary number and placement of the markers with collisions occurring regularly in nearly all the test cases.One of the clearest cases of failure was when the markers were placed in a staggered manner along the walls, this was a clear illustration of the ARGD being an insufficient calculi when it comes to dealing with mobile objects, with the need for fine distinctions between the objects lying in the same distance threshold being clearly highlighted in this case. All the experiments were carried out such that they travel from point `A' to `B' and back from `B' to `A' this was done to ensure that the detection component isn't favorable to any one side or travel and is robust enough to function even if the markers on the opposing walls were interchanged. Out of a set of 12 experiments conducted the ARGD representation was able to perform collision free navigation in all but 4 sets of experiments giving it a success rate of 66.6 percent.
+
+\subsection{Common Observations}
+\begin{itemize}
+	\item All the movements observed during the experiments are gradual and there is no sudden change to the robot's velocity or speed.
+	\item The algorithm can be made more robust if the $ARGD$ and the $QTC_B$ calculus can be combined, this is possible with the current implementation but is complicated as the number of rulesets would increase exponentially with respect to the objects in consideration.
+	\item In the current setup the algorithm is inherently dependent on the perception module and any changes to this module would likely warrant changes to the entire setup especially in the case of the distance based $ARGD$ calculus, the $QTC_B$ calculus on the other hand would only require that the number of objects in consideration be changed to the desired number.
+	\item The current setup uses small velocity values to control the robot with the maximum value being 0.1 m/s and the lowest being 0.02 m/s.
+	\item Improvements to the current algorithm can also be made using different setup of the cameras where two cameras facing the opposite wall may be used.
+	\item The current implementation also uses a time based filter to build relations only when two or more markers are detected simultaneously at similar timesteps, in cases where only a single object is used to build the relation with the robot this filtering must be removed to ensure successful navigation.
+	\item Also if more than two objects are to be used when calculating the motion updates then, filtering has to be done to ensure that there is no repetition when building the relations that are consequently used for the decision making process.
+\end{itemize}
+
+\subsection{Conclusion} 
+\paragraph{} From the above breakdown of the results it is easy to see that the $QTC_B$ calculi outperforms the $ARGD$ calculi when it comes to the task of collision free robot navigation. As discussed above this is attributed to the fact that the distance calculi lacks the tools to distinguish between markers or features that lie in the same distance thresholds, furthermore due to the limited representation capabilities there exist very few instances where a clear distinction between the markers can be made hence resulting in a fewer number of instances where suitable control commands can be exercised. Beyond this, both the calculi suffered failures due to the limited FOV of the camera as it prevented the detection of the markers lying on the opposing walls whenever the robot moved close to either of the walls(it remains crucial to the algorithm that atleast two markers are detected simultaneously, when placed along the same axis or otherwise). To compliment the validity of the results it is worth mentioning that the $ARGD$ calculus works on abstractions of spatial distances and was developed for representing and reasoning about static objects whereas the $QTC_B$ calculi works on abstractions of relative trajectories between two objects and was developed representing and reasoning about mobile objects, hence it is obvious that it should perform better than the $ARGD$ calculus for the given task. Thus based on this empirical evidence we select the $QTC_B$ calculi to compare and evaluate the efficiency paradigms against a quantitative map based representation.
+
+%When performing the experiments the most common issue faced was the quick discharge of the battery and the loss of communication between the modules and the remote computer.
+
+\section{Evaluation of the efficiency of qualitative representations}
+\paragraph{}Based on the above validation efficiency of the $QTC_B$ calculi was compared against the map based navigation technique that utilized quantitative spatial representations, on the task of navigating from point `A' to `B' in the corridor. The starting positions were kept approximately same for the purpose of this testing and the velocity values were ensured to be same. Furthermore since we would like to evaluate the battery consumption a fully charged battery was used during the tests for each representation. The experiment was repeated thrice for each of the representations so as to obtain any variance in the values and ensure accurate resulting values. For the purpose of this evaluation the $QTC_B$ experiment was setup so that the markers always lay on the same perpendicular axis to the wall and the number of markers on both the walls was the same, the starting position was always along the center of the corridor.
+
+
+
+\textcolor{blue}{Need to add the battery values here}
+
+\section{Conclusion}
+From the above evaluation it is obvious(\textcolor{blue}{or not ?}) that the qualitative representations are more efficient in comparison to quantitative representations. This satisfies our initial aim of providing conclusive proof to show the improved efficiency of qualitative representations and evaluating it's utility for the same.

@@ -1,16 +1,93 @@
 %!TEX root = ../PatilM-[RnD-MT]Report.tex
 
-\chapter{Results and Validation}
+\chapter{Experimental Evaluation}
 
-\section{Use case 1}
-Describe results and analyse them
+\paragraph{} The primary goal of this chapter is to provide vital information regarding the empirical evaluation that was carried out to validate the proposed approach. The following sections will discuss the practical use cases for the developed system and give a brief overview of the general test setup of the performed experiments before diving into the details of the experiments themselves. A logical analysis of the obtained results will be performed to conclude the chapter.
 
-\section{Use case 2}
+\section{Use Cases}
+\paragraph{} The main aim of this project is to evaluate the efficiency paradigm of qualitative spatial representations for navigation in mobile robots, especially in closed indoor spaces where quantitative representations of the physical space are considered excessive and unnecessary. Therefore keeping in mind these preconditions we define the following possible use cases.
 
-\section{Use case 3}
+\subsubsection*{Use case: Navigating in a corridor environment} 
+\paragraph{} A mobile robot is tasked with navigating from point `A' to point `B' in a corridor environment such that it should avoid collision with the walls and any other static or dynamic obstacles if they exist in it's path. Furthermore the robot's movement should be such that it avoids any sudden motions that may seem unsafe or unintuitive to an human agent who might interact with the robot. Also chiefly, the robot must achieve this path traversal in a manner that is as efficient as possible ,while dealing with imprecise information about the environment or in extreme cases lack of complete information about the environment. 
 
-\section{Experimental Setup}
-\section{Experimental Evaluation}
+\subsubsection*{Resulting Requirements}
+\paragraph{} Ideally it is desired that any new functionality that is being implemented must be highly generalizable, but keeping in mind the given problem it is unrealistic to expect a `one size fit's all' implementation that works impeccably for all imaginable situations without any restrictions or compromises. Hence a list of requirements resulting from the problem statement and the above described use case is presented below:
 
-\section{Result}
+\begin{itemize}
+	\item The starting position should be irrelevant when navigating the corridor.
+	
+	\item The detection of the markers or features should be robust with respect to a reasonable speed of the robot.
+	
+	\item The number of markers or features should not adversely affect the robot's behavior. 
+	
+	\item The camera used should have a reasonable field of view so that it can see both the walls and their respective features at any given point of time.
+	
+	\item The camera should be able to capture the features reasonably well, irrespective of the lighting conditions.
+	
+	\item The motion profile of the robot should be a smooth and not disruptive. 
+	
+	\item It should be able to navigate any corridor irrespective of it's size or the color of it's walls.
+\end{itemize}
+
+\section{Data collection}
+\paragraph{}During the development stage of the algorithm it was tested continuously against a set of collected data that served as a simulation for corresponding real world situations. This method served as a good test to ensure robustness of the individual software components as well as the entire system once it was combined together. The data was collected by manually driving around the robot in a corridor and recording the output of the camera video stream(RGB) after markers had been attached to the walls of the corridor. This simulated data served as a backbone for understanding some of the constraints of the developed algorithm such as the minimum number of markers required, the field of view of the camera, the position of the camera, the velocity of the robot and the orientation of the robot to ensure that both the walls and their respective markers are visible. The collected data simulated conditions such as, 
+\begin{itemize}
+	\item The robot moving along the center of the corridor.
+	\item The robot moving along the left/right wall.
+	\item The robot moving diagonally across the corridor.
+	\item The robot following a zig-zag pattern along the corridor.
+\end{itemize} 
+\paragraph{} In all these collected videos a set of two markers was placed on the opposing walls such that both the markers lie on the same axis that is perpendicular to the walls, also the markers were placed at equidistant intervals.
+\section{General Test Setup}
+\paragraph{} The testing of the developed algorithm was carried out in a two step manner wherein during the first step we evaluated the performance of the two implemented calculi for the task of corridor navigation. The performance is evaluated based on three criteria, the effect of the starting positions, the effect of the marker positions and the number of markers. The evaluation was judged based on the number of possible control paradigms that ensued in a crash with either of the walls. This led to the selection of the calculi with the least number of crashes, the selected calculi was then compared against the existing map based navigation approach which uses quantitative spatial representations and has been implemented on the applied robot platform by the `b-it bots' team. This comparison yields a evaluation of the efficiency paradigms for both the approaches.
+
+\paragraph{} A general setup of the performed experiments is presented below, with the specifics of each experiment discussed in a later section.
+
+\subsubsection*{Experiment Variables:}
+\begin{itemize}
+	\item Initial position and orientation of the robot.
+	\item Field of View of the camera.
+	\item Lighting conditions of the corridor.
+	\item Initial Position of the camera.
+	\item Position of the markers relative to the fixed camera position.
+	\item Position of the markers relative to each other.
+	\item Battery voltage.
+	\item Range of the wireless network.
+\end{itemize}
+
+\subsubsection*{Software Requirements:}
+\begin{itemize}
+\item ROS Kinetic
+\item Python 2.7 or higher
+\item Qsr\_lib package
+\item Qsr\_nav package
+\item Mir\_bringup package 
+\item Mir\_moveit\_youbot\_brsu\_4 package 
+\item Moveit\_commander package 
+\end{itemize}
+
+\subsubsection*{Hardware Requirements:}
+\begin{itemize}
+	\item Kuka Youbot
+	\item PC capable of runnning ROS
+	\item Remote joystick 
+	\item Power supply 
+	\item Aruco markers
+	\item Asus Xtion Pro camera
+\end{itemize}
+
+\section{Experiments}
+\paragraph{1. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment}
+\paragraph{2. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment}
+\paragraph{3. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment }
+\paragraph{4. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment}
+\paragraph{5. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment }
+\paragraph{6. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment }
+\paragraph{7. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment with varied marker placements}
+\paragraph{8. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment with varied marker placements}
+\paragraph{9. Testing the navigational capabilities of the ARGD calculus in a indoor corridor environment with varied marker placements}
+\paragraph{10. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment with varied marker placements}
+\paragraph{11. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment with varied marker placements}
+\paragraph{12. Testing the navigational capabilities of the QTCB calculus in a indoor corridor environment with varied marker placements}
+\section{Conclusion}
 

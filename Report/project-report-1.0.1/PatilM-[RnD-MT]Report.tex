@@ -14,16 +14,18 @@
 \usepackage{siunitx}
 \usepackage{rotating}
 \usepackage{float}
+\usepackage{longtable}
+\newcommand\nomenclature[3]{#1 & #2 & #3 \\}
 
 % ****************************************************
 % THIS INFORMATION SHOULD BE UPDATED FOR YOUR REPORT
 % ****************************************************
 \author{Mihir Patil}
-\title{Qualitative Representation for Perception and Control of Mobile Platforms}
+\title{Qualitative Perception and Control of Mobile Platforms}
 \supervisors{%
+Prof. Dr. Paul Pl{\"o}ger\\
 Nico Huebel\\
-Santosh Thoduka\\
-Paul Ploger
+Santosh Thoduka
 }
 \date{January  2019}
 
@@ -46,18 +48,26 @@ Paul Ploger
 \statementpage
 
 \begin{abstract}
-Your abstract
+\paragraph{}The objective of this project is to evaluate a qualitative approach for perception and control of a mobile platform, in the context of improving efficiency for the task of robot navigation. Existing techniques for robot navigation try to extract all the information from the environment and represent it in a highly precise numerical manner to aid the design and deployment pre-planned path trajectories. This leads to a prolix of information that the robot will have to process in order to execute a single action, thus highlighting a grossly inefficient manner of representing and utilizing raw environmental data especially in the case of vision based navigation. We present a generalized framework that uses qualitative spatial representations to abstract relative distance and motion data between two objects and further utilizes this to infer the robot's trajectory, thus enabling it to control the motion of the robot via suitable motion updates. We evaluate our approach against a quantitative map based representation to determine the validity of the claims of improved efficiency that are often associated with qualitative representations.
 \end{abstract}
 
-\textcolor{blue}{add images of the marker placements, camera position, pov of the robot and pov of the user, add it in experiments and approach.Also add a image of the rqt graph in the approach section, add procedure in the experimentation section}
-
-opra is oriented point algebra
-
-finish citations in the sota
 \begin{acknowledgements}
-Thanks to ....
+\paragraph{}I would like to express my sincere gratitude towards  all those who provided me the guidance and motivation to complete this project.  I would especially like to thank Nico Heubel and Santosh Thoduka, for their simulating discussions and suggestions
+that helped me overcome various hurdles associated with the development and completion of this project.
 \end{acknowledgements}
 
+\newpage
+\chapter*{Glossary}
+\begin{longtable}{@{}p{2.5cm}@{}p{1cm}@{}p{\dimexpr\textwidth-1cm\relax}@{}}
+	\label{QTC}\nomenclature{\textbf{QTC}}{-}{Qualitative Trajectory Calculus }%
+	\label{CDC}\nomenclature{\textbf{CDC}}{-}{Composite Rigid Body Algorithm}%
+	\label{QRPC}\nomenclature{\textbf{QRPC}}{-}{Recursive Newton-Euler Algorithm}%
+	\label{CyCord}\nomenclature{\textbf{CyCord}}{-}{Stack of Tasks}%
+	\label{RCC}\nomenclature{\textbf{RCC}}{-}{Region Connection Calculus}%
+	\label{ARGD}\nomenclature{\textbf{ARGD}}{-}{Vector Force Field}%
+	\label{OPRA}\nomenclature{\textbf{OPRA}}{-}{Whole Body Control}%      
+	\label{TPCC}\nomenclature{\textbf{TPCC}}{-}{Whole-Body Operational Space Control}%
+\end{longtable}
 
 \tableofcontents
 \listoffigures
@@ -83,10 +93,10 @@ Thanks to ....
 %	APPENDIX
 %-------------------------------------------------------------------------------
 
-\begin{appendices}
-\subfile{chapters/appendix}
-
-\end{appendices}
+%\begin{appendices}
+%\subfile{chapters/appendix}
+%
+%\end{appendices}
 
 \backmatter
 

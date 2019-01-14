@@ -8,21 +8,147 @@ The conclusions drawn in the previous chapter, allow us the liberty of focusing 
 %For the sake of simplifying our task we use aruco markers placed at various positions on the walls of the corridor, the use of aruco markers stems from the need to provide the QSRLib with cartesian coordinates of features or spatial entities with which the robot needs a relation. Additionally this allows us to simplfy the subtask of perception as we no longer need to detect robust features from the environment and can focus instead on the primary task of creating the qualitative abstractions and using them effectively.
 
 \section{Approach}
-\paragraph{Overview}The developed approach is a python implementation in the ROS ecosystem and can be broken down into three sub tasks or modules namely the qualitative perception module, the qualitative relation module and the qualitative control module. Each of these three modules deals with a crucial aspect of navigating using qualitative spatial representations. The perception module uses the RGB video obtained from the camera to detect Aruco markers and decipher their Cartesian coordinates, this data is then forwarded to the qualitative relation module which utilizes it to build qualitative relations of these detected features(markers) with respect to the position of the robot. To build these relations an open source project called the QSRLib is used, this is a library containing python implementations of various qualitative calculi, including the $QTC_B$ calculus and the $ARGD$ calculus.  The nature of these relations and the information encoded in them depends upon the calculus used, if the $QTC_B$ calculus is used then the relative trajectory information between the two objects is encoded, whereas if the $ARGD$ calculus is used then the relative distance information between the two objects is encoded. As we use a minimum of two markers corresponding markers at any given position on the opposing walls, the qualitative relation module builds the relationships only if both these markers have been detected at similar timestamps. The output from the QSRLib is parsed in a manner such that it will be easier to infer and evaluate in the qualitative control module. The qualitative control module receives the relations of each individual object with respect to the robot these relations are then combined together to better understand the whole picture with regards to the relative movement of the robot in the environment(w.r.t the markers). Once a complete and combined relation is obtained it is analyzed further to decide upon a possible motion command for the robot to continue moving smoothly without any collisions with the walls. These motion commands are then sent to a low level controller, which converts them into a machine readable form and uses this to control the motors and achieve the desired movement.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale = 0.5]{"images/block diag"}
+	\caption{Block diagram showing the input and output for each module along with the flow of control throughout the algorithm.}
+	\label{fig:block-diag}
+\end{figure}
+
+\paragraph{Overview}The developed approach is a python implementation in the ROS ecosystem and can be broken down into three sub tasks or modules namely the qualitative perception module, the qualitative relation module and the qualitative control module. Each of these three modules deals with a crucial aspect of navigating using qualitative spatial representations. The perception module uses the RGB video obtained from the camera to detect features and decipher their Cartesian coordinates, this data is then forwarded to the qualitative relation module which utilizes it to build qualitative relations of these detected features(markers) with respect to the position of the robot. To build these relations an open source project called the QSRLib is used, this is a library containing python implementations of various qualitative calculi, including the $QTC_B$ calculus and the $ARGD$ calculus.  The nature of these relations and the information encoded in them depends upon the calculus used, if the $QTC_B$ calculus is used then the relative trajectory information between the two objects is encoded, whereas if the $ARGD$ calculus is used then the relative distance information between the two objects is encoded. As we use a minimum of two markers corresponding markers at any given position on the opposing walls, the qualitative relation module builds the relationships only if both these markers have been detected at similar timestamps. The output from the QSRLib is parsed in a manner such that it will be easier to infer and evaluate in the qualitative control module. The qualitative control module receives the relations of each individual object with respect to the robot these relations are then combined together to better understand the whole picture with regards to the relative movement of the robot in the environment(w.r.t the markers). Once a complete and combined relation is obtained it is analyzed further to decide upon a possible motion command for the robot to continue moving smoothly without any collisions with the walls. These motion commands are then sent to a low level controller, which converts them into a machine readable form and uses this to control the motors and achieve the desired movement.
+
+\paragraph{} A sample run through the block diagram described above in fig:3.1 is as follows:
+\begin{itemize}
+	\item First the perception module detects markers at points `A' and `B', the time of this detection is noted and the Cartesian coordinates for the markers are obtained.
+	\item Next, the representation module takes this data (via QSRLib) and outputs a set of qualitative spatial relations (amongst the robot and objects) for that particular instance of time. 
+	\begin{enumerate}
+		\item \textbf{Sample `$QTC_B$' relation}
+		\begin{itemize}
+			\item \textbf{`-,0'} : for `object1' and `robot', similarly a relation for `object2' and `robot' is also generated.
+		\end{itemize}
+			
+		\item \textbf{Sample `$ARGD$' relation}
+		\begin{itemize}
+			\item \textbf{`Medium', `Far'} :  for [`object1' and `robot'], [`object2' and `robot'] respectively.
+		\end{itemize}
+	\end{enumerate} 
+
+	\item After obtaining these qualitative relations, we compare them in the control module against a ruleset (shown in section 3.1.3) to determine which rule matches with the conditions of the obtained spatial relations and issue the corresponding motion update to the robot, which results in the robot moving in the indicated direction.
+	
+\end{itemize}
 
 \subsection{Perception}
 \paragraph{}In mobile robots perception allows the robot to `see' its surroundings and safely interact with them, in our developed approach we use a RGB camera to achieve this result. Although other sensors such as range or stereo may be used we use the camera as this provides a more intuitive visual representation of the environment. The perception module implemented in this approach uses RGB video data, captured by a camera mounted on top of the KUKA youbot arm. This video data is assessed in real time to detect ARUCO markers that have been placed beforehand at various positions along the walls of the environment. The use of Aruco markers is warranted by two reasons, primarily this allows the simplification of the task of detecting robust features in the environment, since now the only features we are looking for are the markers. Furthermore these markers make it easy to extract their respective Cartesian coordinates, which is a necessary piece of data that is required by the QSRLib to build qualitative relationships between the robot and the spatial entities(markers represent abstractions of objects/features on the walls). From a conceptual point of view this allows us to simplify the subtask of perception as we no longer need to detect natural features from the environment and can focus instead on the primary task of creating the qualitative relations and using them effectively.
 
 \subsection{Representation}
-\paragraph{} In the representation module we basically build qualitative relationships between the markers and the robot based on the relative motion between the two. The relations are further used in the control module to infer the robot's allocentric spatial transform(trajectory) and make corresponding control decisions to its motion. As mentioned previously we do not implement any of the discussed calculi from scratch instead choosing to utilize a library containing python based implementations of each. The implementation uses to separate nodes to work with the $QTC_B$ calculus and the $ARGD$ calculus individually. The data received from the perception module is preprocessed in a similar fashion for both the calculi, first the data is filtered based on the timestamps that both the markers are detected at approximately the same time, then a distinction is made between the marker poses to determine the ones that lie on the left of the robot and ones that lie on the right. Once this is done we begin converting this raw data into the required format for the QSRLib, wherein we associate each marker with a distinctive object name, a common timestamp for all the objects in the relation(the robot, the left marker, and the right marker) and the respective pose of each of the markers. This data is encoded in the form of a time-series of distinctive states for each of the markers and the robot. After this preprocessing the data is finally ready to be packaged into a custom QSRLib request message that contains the selected id of the qualitative calculi in addition to the preprocessed data. Since the QSRLib uses a ROS service-client architecture the computation of the relationships is extremely fast and does not cause any delay in the overall approach.
+\paragraph{} The representation module builds qualitative relationships between the markers and the robot based on the relative motion between the two, these relations qualitatively describe the environment from the robot's perspective. The relations are further used in the control module to infer the robot's allocentric spatial transform(trajectory) and make corresponding control decisions to its motion. As mentioned previously we do not implement any of the discussed calculi from scratch instead choosing to utilize a library containing python based implementations of each. The implementation uses two separate nodes to work with the $QTC_B$ calculus and the $ARGD$ calculus individually. The data received from the perception module is preprocessed in a similar fashion for both the calculi, first the data is filtered based on the timestamps that both the markers are detected at approximately the same time, then a distinction is made between the marker poses to determine the ones that lie on the left of the robot and ones that lie on the right. Once this is done we begin converting this raw data into the required format for the QSRLib, wherein we associate each marker with a distinctive object name, a common timestamp for all the objects in the relation(the robot, the left marker, and the right marker) and the respective pose of each of the markers. This data is encoded in the form of a time-series of distinctive states for each of the markers and the robot. After this preprocessing the data is finally ready to be packaged into a custom QSRLib request message that contains the selected id of the qualitative calculi in addition to the preprocessed data. Since the QSRLib uses a ROS service-client architecture the computation of the relationships is extremely fast and does not cause any delay in the overall approach.
 
-\paragraph{} Upon receiving a response from the QSRLib server the message is sorted for each relation based on the timestamps and then modified to make it easy to read and understand for a human operator. This modified data allows us to manually verify if the built relations actually reflect the state of the robot and its environment accurately for that instance of time. A custom topic and message is used to share the data with the control module.
 
 \subsection{Control}
 \paragraph{} The data obtained from the representation module is utilized to make control decisions regarding the robot's movement at that particular instance of time. Since both the qualitative calculi present a different set of relations we use two separate nodes for analyzing the relations obtained from each individual calculi. Each relation is broken down into two parts one is the relationship itself and the other is the set of objects for which the relationship holds, once this is achieved the relationships are passed through a set of if-else rule-sets to find one that matches and the respective control command is issued to the low level controller which in turn controls the motors to move the robot accordingly. 
 
+\paragraph{}The following code snippet illustrates the $QTC_B$ rule-sets used and their corresponding motion updates for a robot tasked with moving forward along a corridor, the identifiers `rel1' and `rel2' indicate the individual relationships of each object, such that `rel2' is always reserved for the robot. To illustrate the semantics of the rule-sets presented below consider the case where the robot is moving towards a marker (stationary), indicated by the relation \textbf{`0,+'}(the marker is stable w.r.t the robot, but robot is moving towards the marker) in the presented code snippet. In this case we first determine whether the robot is moving towards a marker on the left wall or on the right wall and then issue a motion update that tells the robot to move in the opposite direction in order to avoid collision with the wall. Similarly each of the rule-sets described below encode such situations where the path of the robot has to be altered in order to avoid collisions with the walls.
+
+\begin{lstlisting}
+if relation = = "'0,0'":
+	rel1 = 'Stable'
+	rel2 = 'Stable'
+	vel_cmd = 'Move Forward'
+
+if relation = = "'0,-'":
+	rel1 = 'Stable'
+	rel2 = 'Away'
+	if obj1 = = object_left:
+		vel_cmd = 'Move Forward'
+	else:
+		vel_cmd = 'Move Forward'
+
+if relation = = "'0,+'":
+	rel1 = 'Stable'
+	rel2 = 'Towards'
+	if obj1 = = object_left:
+		vel_cmd = 'Move Right'
+	else:
+		vel_cmd = 'Move Left'
+
+if relation = = "'+,0'":
+	rel1 = 'Towards'
+	rel2 = 'Stable'
+	if obj1 = = object_left:
+		vel_cmd = 'Move Right'
+	else:
+		vel_cmd = 'Move Left'
+
+if relation = = "'-,0'":
+	rel1 = 'Away'
+	rel2 = 'Stable'
+	if obj1 = = object_left:
+		vel_cmd = 'Move Forward'
+	else:
+		vel_cmd = 'Move Forward'
+
+if relation = = "'-,-'":
+	rel1 = 'Away'
+	rel2 = 'Away'
+	vel_cmd = 'Move Forward'
+
+if relation = = "'-,+'":
+	rel1 = 'Away'
+	rel2 = 'Towards'
+	if obj1 = = object_left:
+		vel_cmd = 'Move Left'
+	else:
+		vel_cmd = 'Move Right'
+
+if relation = = "'+,+'":
+	rel1 = 'Towards'
+	rel2 = 'Towards'
+	vel_cmd = "Move Forward" 
+
+if relation = = "'+,-'":
+	rel1 = 'Towards'
+	rel2 = 'Away'
+	if obj1 = = object_left:
+		vel_cmd = 'Move Right'
+	else:
+		vel_cmd = 'Move Left'
+\end{lstlisting}
+
+
+\paragraph{}A code-snippet of the $ARGD$ calculi rule-sets and their respective motion updates for a robot moving forward along a corridor is shown below, the identifiers `rel1' and `rel2' indicate the individual relationships of each object set.To illustrate the semantics of the rule-sets presented below consider the case where the robot has just started moving towards a marker (stationary) on the left wall thus effectively causing the robot to move away from the marker on the right wall, indicated by the relation \textbf{rel1 = = 'Near'" and rel2 = = "'Medium'"} in the presented code snippet. In this case we would like the robot to slowly start moving towards the right wall to avoid ending up in a situation where it collides with the left wall, and hence issue a motion update telling the robot to move accordingly. Similarly each of the rule-sets described below encode such situations where the path of the robot has to be altered in order to avoid collisions with the walls.
+\begin{lstlisting}
+if (rel1 = = "'Near'" and rel2 = = "'Near'"):
+	vel_cmd = 'Move Forward'
+if (rel1 = = "'Near'" and rel2 = = "'Medium'"):
+	vel_cmd = 'Move Right Slowly'
+if (rel1 = = "'Near'" and rel2 = = "'Far'"):
+	vel_cmd = 'Move Right Quickly'
+if (rel1 = = "'Medium'" and rel2 = = "'Near'"):
+	vel_cmd = 'Move Left Slowly'
+if (rel1 = = "'Medium'" and rel2 = = "'Medium'"):
+	vel_cmd = 'Move Forward'
+if (rel1 = = "'Medium'" and rel2 == "'Far'"):
+	vel_cmd = 'Move Right Slowly'
+if (rel1 = = "'Far'" and rel2 = = "'Near'"):
+	vel_cmd = 'Move Left Quickly'
+if (rel1 = = "'Far'" and rel2 = = "'Medium'"):
+	vel_cmd = 'Move Left Slowly'
+if (rel1 = = "'Far'" and rel2 = = "'Far'"):
+	vel_cmd = 'Move Forward'
+\end{lstlisting}
+
 \section{Implementation details}
+
 \paragraph{} As mentioned previously the entire approach is implemented using python 3 and the ROS environment. The general publisher-subscriber approach is used for all the developed nodes and custom messages and topics are used to exchange data amongst the nodes. The same basic approach is used for both the $QTCB$ and the $ARGD$ calculi wherein the video data is first analyzed in the perception node, the results of which are then shared with the representation node via a common topic using custom messages. The representation filters out unnecessary information using a time filter to ensure that only opposing markers(we assume that there are atleast two markers in the environment ) that were detected at almost similar time instances are used when building the qualitative relations(using the QSRLib) with the robot. These relations are then shared with the control module again via custom messages and a common topic. Once the data has been received by the control node, it is run through a set of if-else conditions that act as rulesets which decide how the robot should move based on what it is seeing. Once a motion update from the rulesets is obtained the result is published on a `cmd\_vel' topic that is being listened to by a low level controller which then translates it into low level motion commands to the motors. While there are separate nodes for representation and control for both the calculi the perception node is shared among the two, since the same set of data is used to build qualitative relationships amongst the objects irrespective of the calculi used. Finally the developed implementation is stored in the form of a package named as `qsr\_nav'.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.4]{images/rosgraph}
+	\caption{A rosgraph image showing the pipeline for the developed approach, the rectangles represent the topics and the ovals represent the nodes.}
+	\label{fig:rosgraph}
+\end{figure}
+
 
 \subsection{QSRLib}
 
@@ -51,98 +177,11 @@ The conclusions drawn in the previous chapter, allow us the liberty of focusing 
 \paragraph{}The control module also uses two different nodes to deal individually with the $QTC_B$ and $ARGD$ relations, this structure promotes modularity and makes it easier to combine the two pipelines if the need ever arises. Furthermore the control module is divided into two ROS nodes one for interpreting the relations and the other for converting these motion updates into numerical velocity values that can be used to control the robot.
 
 \paragraph{QTCB Controller}
-\paragraph{}The control module is implemented as a set of if-else rules that compare the relations obtained from the representation module and present a possible control command that is to be applied to the robot's motion. After obtaining the relations on the `qtcb\_relationship' topic the data is preprocessed using python string operators such as split() and strip() to obtain the individual sets of objects(eg:(object1,robot)) and their corresponding relationships again the relationships are checked to verify that they do actually belong to the $QTC_B$ calculi, since each relationship has this encoded in the form of the calculi name a simple string check suffices for this purpose. Once the relations have been cleaned we use simple if-else conditions to check for possible matches from a set of possible relations, this is feasible as there exists a finite set of relations that are can exist between the two objects, also since the relations between the robot and the two markers are mutually exhaustive it suffices to check the relation of each marker with the robot individually as we know that the corresponding relationship with the other marker is the inverse of the relationship between the current marker and the robot. Furthermore this trick allows us to compare the relationships amongst each set of objects individually and reduces the number of possible states that have to be compared, for a relation between two individual objects there are 9 possible relationships, hence there are 9 possible relations for each object set, now if we decide to combine two object sets then we have a set of 81($9^2$) possible relationships for only one order of combination of these object sets, if the order is now reversed then we get another set of 81 possible relationships, hence to make this a set of mutually exhaustive relations(for only two object sets) we have to go through a set of 162($2 X 81$) possible relations to obtain one possible update for the robot's motion thus making this an unnecessary complication that can be avoided. Also this number rises exponentially if the number of objects or markers is increased as the object sets are possible combinations of these individual markers this adds an unnecessary dependency on the number of markers. Therefore to avoid such complications we compare the relations for each object set individually and use the simple information of the relative location(left or right) of the object with respect to the robot to decide upon the motion update for the robot. Thus resulting in a simple yet effective control module. 
-
-\paragraph{}Additionally $\{-,+,0\} = [towards, away, stable]$, are the actual interpretations of the $QTC_B$ relations when the robot has allocentric spatial transforms with respect to the environment, but in our case since the robot is considered to have egocentric spatial transforms with the environment the relations are inverted. The following code snippet illustrates the rule-sets used and their corresponding motion updates for a robot tasked with moving forward along a corridor, the identifiers `rel1' and `rel2' indicate the individual relationships of each object, such that `rel2' is always reserved for the robot.
-
-\begin{verbatim}
-	if relation == "'0,0'":
-		rel1 = 'Stable'
-		rel2 = 'Stable'
-		vel_cmd = 'Move Forward'
-	
-	if relation == "'0,-'":
-		rel1 = 'Stable'
-		rel2 = 'Away'
-		if obj1 == object_left:
-			vel_cmd = 'Move Forward'
-		else:
-			vel_cmd = 'Move Forward'
-	
-	if relation == "'0,+'":
-		rel1 = 'Stable'
-		rel2 = 'Towards'
-		if obj1 == object_left:
-			vel_cmd = 'Move Right'
-		else:
-			vel_cmd = 'Move Left'
-	
-	if relation == "'+,0'":
-		rel1 = 'Towards'
-		rel2 = 'Stable'
-		if obj1 == object_left:
-			vel_cmd = 'Move Right'
-		else:
-			vel_cmd = 'Move Left'
-	
-	if relation == "'-,0'":
-		rel1 = 'Away'
-		rel2 = 'Stable'
-		if obj1 == object_left:
-			vel_cmd = 'Move Forward'
-		else:
-			vel_cmd = 'Move Forward'
-	
-	if relation == "'-,-'":
-		rel1 = 'Away'
-		rel2 = 'Away'
-		vel_cmd = 'Move Forward'
-	
-	if relation == "'-,+'":
-		rel1 = 'Away'
-		rel2 = 'Towards'
-		if obj1 == object_left:
-			vel_cmd = 'Move Left'
-		else:
-			vel_cmd = 'Move Right'
-	
-	if relation == "'+,+'":
-		rel1 = 'Towards'
-		rel2 = 'Towards'
-		vel_cmd = "Move Forward" 
-	
-	if relation == "'+,-'":
-		rel1 = 'Towards'
-		rel2 = 'Away'
-		if obj1 == object_left:
-			vel_cmd = 'Move Right'
-		else:
-		vel_cmd = 'Move Left'
-\end{verbatim}
+\paragraph{}The control module is implemented as a set of if-else rules that compare the relations obtained from the representation module and present a possible control command that is to be applied to the robot's motion. After obtaining the relations on the `qtcb\_relationship' topic the data is preprocessed using python string operators such as split() and strip() to obtain the individual sets of objects(eg:(object1,robot)) and their corresponding relationships again the relationships are checked to verify that they do actually belong to the $QTC_B$ calculi, since each relationship has this encoded in the form of the calculi name a simple string check suffices for this purpose. Once the relations have been cleaned we use simple if-else conditions to check for possible matches from a set of possible relations, this is feasible as there exists a finite set of relations that are can exist between the two objects, also since the relations between the robot and the two markers are mutually exhaustive it suffices to check the relation of each marker with the robot individually as we know that the corresponding relationship with the other marker is the inverse of the relationship between the current marker and the robot. Furthermore this trick allows us to compare the relationships amongst each set of objects individually and reduces the number of possible states that have to be compared, for a relation between two individual objects there are 9 possible relationships, hence there are 9 possible relations for each object set, now if we decide to combine two object sets then we have a set of 81($9^2$) possible relationships for only one order of combination of these object sets, if the order is now reversed then we get another set of 81 possible relationships, hence to make this a set of mutually exhaustive relations(for only two object sets) we have to go through a set of 162($2 X 81$) possible relations to obtain one possible update for the robot's motion thus making this an unnecessary complication that can be avoided. Also this number rises exponentially if the number of objects or markers is increased as the object sets are possible combinations of these individual markers this adds an unnecessary dependency on the number of markers. Therefore to avoid such complications we compare the relations for each object set individually and use the simple information of the relative location(left or right) of the object with respect to the robot to decide upon the motion update for the robot. Thus resulting in a simple yet effective control module. Additionally $\{-,+,0\} = [towards, away, stable]$, are the actual interpretations of the $QTC_B$ relations when the robot has allocentric spatial transforms with respect to the environment, but in our case since the robot is considered to have egocentric spatial transforms with the environment the relations are inverted. 
 
 \paragraph{ARGD Controller}
 \paragraph{} Similar to the `QTCB Controller' the control module for the $ARGD$ also uses if-else rule-sets to iterate through a list of possible relations and then select a motion update when a match is found, unlike the $QTC_B$ though we do not compare the relations of each object set individually as the number of relations for each object set is very small(3) and here the combinations of the object sets is necessary to be able to distinguish between different states of the robot with respect to the objects or markers, again the implementation of this rule-set ensures that it is independent of the number of markers and their placements in the environment(as can be seen from the experiments).
-\paragraph{}Since in this case we use a combination of the relations of the object sets, the data obtained from the `argd\_relationship' topic is processed slightly differently from the manner shown in the `QTCB Controller' section. Here we apply the python string operators `split()' and `strip()' to breakdown the breakdown the raw relationship data into parts so that it is easy to associate them with their respective object sets. Once this is done we use the if-else conditions to iterate over the various possible combinations of these individual relations to obtain a suitable motion update. A code-snippet of rule-sets and their respective motion updates for a robot moving forward along a corridor is shown below, the identifiers `rel1' and `rel2' indicate the individual relationships of each object set.
-\begin{verbatim}
-	if (rel1 == "'Near'" and rel2 == "'Near'"):
-		vel_cmd = 'Move Forward'
-	if (rel1 == "'Near'" and rel2 == "'Medium'"):
-		vel_cmd = 'Move Right Slowly'
-	if (rel1 == "'Near'" and rel2 == "'Far'"):
-		vel_cmd = 'Move Right Quickly'
-	if (rel1 == "'Medium'" and rel2 == "'Near'"):
-		vel_cmd = 'Move Left Slowly'
-	if (rel1 == "'Medium'" and rel2 == "'Medium'"):
-		vel_cmd = 'Move Forward'
-	if (rel1 == "'Medium'" and rel2 == "'Far'"):
-		vel_cmd = 'Move Right Slowly'
-	if (rel1 == "'Far'" and rel2 == "'Near'"):
-		vel_cmd = 'Move Left Quickly'
-	if (rel1 == "'Far'" and rel2 == "'Medium'"):
-		vel_cmd = 'Move Left Slowly'
-	if (rel1 == "'Far'" and rel2 == "'Far'"):
-		vel_cmd = 'Move Forward'
-\end{verbatim}
+\paragraph{}Since in this case we use a combination of the relations of the object sets, the data obtained from the `argd\_relationship' topic is processed slightly differently from the manner shown in the `QTCB Controller' section. Here we apply the python string operators `split()' and `strip()' to breakdown the breakdown the raw relationship data into parts so that it is easy to associate them with their respective object sets. Once this is done we use the if-else conditions to iterate over the various possible combinations of these individual relations to obtain a suitable motion update. 
 
 \section{Implementation Notes}
 \begin{itemize}

@@ -8,7 +8,7 @@
 \paragraph{} The main aim of this project is to evaluate the efficiency paradigm of qualitative spatial representations for navigation in mobile robots, especially in closed indoor spaces where quantitative representations of the physical space are considered excessive and unnecessary. Therefore keeping in mind these preconditions we define the following possible use cases.
 
 \subsubsection*{Use case: Navigating in a corridor environment} 
-\paragraph{} A mobile robot is tasked with navigating from point `A' to point `B' in a corridor environment such that it should avoid collision with the walls and any other static or dynamic obstacles if they exist in it's path. Furthermore the robot's movement should be such that it avoids any sudden motions that may seem unsafe or unintuitive to an human agent who might interact with the robot. Also chiefly, the robot must achieve this path traversal in a manner that is as efficient as possible ,while dealing with imprecise information about the environment or in extreme cases lack of complete information about the environment. 
+\paragraph{} A mobile robot is tasked with navigating from point `A' to point `B' in a corridor environment such that it should avoid collision with the walls and any other static or dynamic obstacles if they exist in its path. Furthermore the robot's movement should be such that it avoids any sudden motions that may seem unsafe or unintuitive to an human agent who might interact with the robot. Also chiefly, the robot must achieve this path traversal in a manner that is as efficient as possible ,while dealing with imprecise information about the environment or in extreme cases lack of complete information about the environment. 
 
 \subsubsection*{Resulting Requirements}
 \paragraph{} Ideally it is desired that any new functionality that is being implemented must be highly generalizable, but keeping in mind the given problem it is unrealistic to expect a `one size fits all' implementation that works impeccably for all imaginable situations without any restrictions or compromises. Hence a list of requirements resulting from the problem statement and the above described use case is presented below:
@@ -26,7 +26,7 @@
 	
 	\item The motion profile of the robot should be a smooth and not disruptive. 
 	
-	\item It should be able to navigate any corridor irrespective of it's size or the color of it's walls.
+	\item It should be able to navigate any corridor irrespective of its size or the color of its walls.
 \end{itemize}
 
 \section{Data collection}
@@ -48,7 +48,7 @@
 		\subfloat[Experimental setup from the robot's point of view]{{\includegraphics[width=6cm]{images/even_mark} }}%
 		\qquad
 		\subfloat[Experimental setup from a third person point of view]{{\includegraphics[width=6cm]{images/start} }}%
-		\caption{Experimental setup with two sets of markers placed along a common perpendicular axis on opposite walls.}%
+		\caption{Experimental setup with two sets of markers (indicated using blue boxes) placed along a common perpendicular axis on opposite walls.}%
 		\label{fig:point of view}%
 	\end{figure}
 
@@ -173,9 +173,9 @@
 		\hline
 		Experiment number & Starting Battery Voltage (volts) & Ending Battery Voltage (volts) & Average Battery Voltage (volts) & Duration of the Experiment(in seconds) & Total Velocity commands issued & Velocity commands per second (messages/second) \\ \hline
 		1 & 12 & 12 & 12 & 39.4 & 309 & 7.8 \\ \hline
-		2 & 12 & 12 & 12 & 41.7 & 321 & 7.69 \\ \hline
-		3 & 12 & 12 & 12 & 36.5 & 317 & 8.68 \\ \hline
-		&  &  & Gross Avg. : 12 &  &  & Gross Avg. : 8.05 \\ \hline
+		2 & 12 & 12 & 12 & 41.7 & 321 & 7.6 \\ \hline
+		3 & 12 & 12 & 12 & 36.5 & 317 & 8.6 \\ \hline
+		&  &  & Gross Avg. : 12 &  &  & Gross Avg. : 8.0 \\ \hline
 	\end{tabular}
 	\caption{Computational and power consumption statistics for quantitative map based navigation.}
 	\label{map based table}
@@ -201,10 +201,10 @@
 	\subfloat[Plot showing the robot's general path through the corridor when using the qualitative approach, the bottom left indicate the start point and the top right indicates the end.]{{\includegraphics[width=6cm]{images/25_40} }}%
 	\qquad
 	\subfloat[Plot showing the robot's general path through the corridor when using the quanititative map based approach, the bottom left indicate the start point and the top right indicates the end.]{{\includegraphics[width=6cm]{images/57_26} }}%
-	\caption{Image showing the general path of the robot when using either of the two approaches being compared in section 5.5(the corridor's walls lie along the path, parallel and equidistant to each other)}%
+	\caption{Image showing the general path (approximately 7 meters in length) of the robot when using either of the two approaches being compared in section 5.5(the corridor's walls lie along the path, parallel and equidistant to each other)}%
 	\label{fig:path}%
 \end{figure}
 
 \section{Conclusion}
-Due to a lack of decisive data regarding the battery statistics we cannot make any concrete arguments over the power consumption efficiency of the qualitative representations in comparison to the quantitative representations, a better data collection approach that depicts the battery statistics in a much more accurate manner is needed for further examination. Therefore we evaluate the efficiency paradigm from a computational point of view.From a brief glance at the above comparison it is easy to conclude that qualitative representations aren't exactly as efficient as they are made out to be. Yet, the result is not a direct effect of the qualitative representations themselves, but a combination of various other factors that contribute towards the final outcome. For instance, in our implementation we do not discern between two motion updates that are the same for consecutive instances of time, this leads to a large number of duplicate velocity commands issued (hence the large number in table 5.2) also since the velocity at which the robot moves is still slower than the velocity for the map based approach which leads to a longer duration of the experiment which in-turn increases the duration of the recorded bagfile. Furthermore when conducting this set of evaluations due to delay in stopping the recording of the bagfiles we end up with redundant data that contributes to the  large number of unnecessary velocity commands being issued even after the robot has reached the goal position. To give a more comprehensive idea of the effect of accounting for this redundant data we analyzed the data from the third experiment and found out that out of the total 1333 velocity commands issued only 460 were non-duplicated amongst consecutive time steps this effectively translates to 7.07 messages per second thus showing a improved computational efficiency over the map-based approach. Therefore we establish that the utilization of qualitative representations is more efficient but our implementation of these approaches still requires further work to achieve this improvement in efficiency. 
+Due to a lack of decisive data regarding the battery statistics we cannot make any concrete arguments over the power consumption efficiency of the qualitative representations in comparison to the quantitative representations, a better data collection approach that depicts the battery statistics in a much more accurate manner is needed for further examination. Therefore we evaluate the efficiency paradigm from a computational point of view.From a brief glance at the above comparison it is easy to conclude that qualitative representations aren't exactly as efficient as they are made out to be. Yet, the result is not a direct effect of the qualitative representations themselves, but a combination of various other factors that contribute towards the final outcome. For instance, in our implementation we do not discern between two motion updates that are the same for consecutive instances of time, this leads to a large number of duplicate velocity commands issued (hence the large number in table 5.2) which in-turn increases the duration of the recorded bagfile. To give a more comprehensive idea of the effect of accounting for this redundant data we analyzed the data from the third experiment and found out that out of the total 1333 velocity commands issued only 460 were non-duplicated amongst consecutive time steps this effectively translates to 7.07 times that the robot's motion was updated (via the velocity messages) in a single second, thus showing a slight improvement in computational efficiency over the map-based approach. Therefore we establish that the utilization of qualitative representations does provide a slightly better computational efficiency but not enough to conclusively claim that it is more efficient than numerical quantitative representations. On the other hand our implementation of these qualitative approaches still requires additional work to achieve this improvement in efficiency, however small it might be. 
 

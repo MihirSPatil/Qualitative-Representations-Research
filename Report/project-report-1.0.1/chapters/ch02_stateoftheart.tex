@@ -1,7 +1,7 @@
 %!TEX root = ../PatilM-[RnD-MT]Report.tex
 
 \chapter{State of the Art}
-\paragraph{}Over the years, research into qualitative spatial representations has led to the development of various models which can be used to represent the visually observable space.From a more scientific perspective these models are known as `Qualitative calculi', the current state of the art calculi rely on a single spatial primitive such as distance, direction, topology etc., to describe a set of relationships amongst the observable objects. In general each calculi comes with its own set of benefits and drawbacks as each one of them has been tailored to exploit different aspects of space\cite{chen2015survey}, \cite{cohn2008qualitative}. 
+\paragraph{}Over the years, research into qualitative spatial representations has led to the development of various models which can be used to represent the visually observable space. From a more scientific perspective these models are known as `Qualitative calculi', the current state of the art calculi rely on a single spatial primitive such as distance, direction, topology etc., to describe a set of relationships amongst the observable objects. In general each calculi comes with its own set of benefits and drawbacks as each one of them has been tailored to exploit different aspects of space\cite{chen2015survey}, \cite{cohn2008qualitative}. 
 
 \paragraph{}For the case of robot navigation, current state of the art approaches utilize qualitative calculi that can provide both spatial and temporal information such as the QTC \cite{van2005qualitative} or QRPC \cite{glez2013qrpc}. There exist comprehensive surveys that provide detailed information about each of the existing qualitative calculi\cite{cohn1997qualitative}, \cite{chen2015survey}, \cite{cohn2001qualitative}, \cite{cohn2008qualitative} hence this state of the art aims to provide only a concise overview of the qualitative calculi that are advantageous to our application. We shall look into the relationships afforded by each of these calculi and their classification based on the domain of their utility.
 
@@ -19,12 +19,12 @@
 		\begin{figure}[h]
 			\centering
 			\includegraphics[width=0.7\linewidth]{images/rcc8_rel}
-			\caption{The eight jointly exhaustive and pairwise disjoint relations of region connection calculus (RCC8). The arrows show which relation is the next relation a configuration would transit to, assuming the continuous movements or deformations \cite{cohn1997qualitative}, \cite{chen2015survey}, \cite{cohn2001qualitative}, \cite{cohn2008qualitative}.}
+			\caption{The eight jointly exhaustive and pairwise disjoint relations of region connection calculus (RCC8). The arrows show which relation is the next relation a configuration would transit to, assuming the continuous movements or deformations \cite{chen2015survey}}
 			\label{fig:rcc8rel}
 		\end{figure}
 		
 		
-		\subsection{Directional Representations}: The relative direction between two different objects can be represented using directional relations/representations \cite{cohn1997qualitative}, \cite{chen2015survey}, \cite{cohn2001qualitative}, \cite{cohn2008qualitative}. These representations rely on three primary elements, a reference object, a reference frame and a target object to define a valid relation between two different objects. Directional representations are widely classified into two categories, point based and projection based with the discerning factor being the dimension of the objects involved and distinction of space using either cone shaped spatial sectors or by using vertical and horizontal lines to create smaller rectangular sectors. Furthermore, the directional calculus isn't restricted to using only cardinal directions, it also allows the use of nominal directional information such as left, right etc. to describe the directional relations. Qualitative calculi such as CDC, OPRA, CyCord etc. utilize the directional representation. Being based of topological representations, directional representations also include only spatial information while disregarding temporal data.
+		\subsection{Directional Representations} The relative direction between two different objects can be represented using directional relations/representations \cite{cohn1997qualitative}, \cite{chen2015survey}, \cite{cohn2001qualitative}, \cite{cohn2008qualitative}. These representations rely on three primary elements, a reference object, a reference frame and a target object to define a valid relation between two different objects. Directional representations are widely classified into two categories, point based and projection based with the discerning factor being the dimension of the objects involved and distinction of space using either cone shaped spatial sectors or by using vertical and horizontal lines to create smaller rectangular sectors. Furthermore, the directional calculus isn't restricted to using only cardinal directions, it also allows the use of nominal directional information such as left, right etc. to describe the directional relations. Qualitative calculi such as CDC, OPRA, CyCord etc. utilize the directional representation. Being based of topological representations, directional representations also include only spatial information while disregarding temporal data.
 		
 		\begin{figure}[h!]%
 			\centering
@@ -35,7 +35,7 @@
 			\label{fig:example}%
 		\end{figure}
 	
-		\subsection{Distance Representations}: The qualitative representation of spatial distance can be classified into two groups namely absolute and relative \cite{isli2000new}, \cite{chen2015survey}, \cite{cohn2001qualitative}, \cite{isli2001combining}. This classification is made solely on the basis of  the presence/absence of an extraneous referential object in the relation between two objects. This distinction can be clearly illustrated by the following example,`the distance between A and B is 8 meters' or `A is near B', this is a absolute approach as the distance is measured directly between two objects.Whereas saying that `A is closer to B than that to C' classifies as a relative approaches as this involves the comparison to a third object. Furthermore, it has been shown that absolute approaches	can be qualitative or quantitative, but relative approaches are commonly qualitative \cite{cohn2001qualitative}.Qualitative calculi such as the ARGD (or Delta) and TPCC use the distance representations to describe the observable space. Distance based relations have found to be insufficient by themselves when it comes to the task of robot manipulation/navigation and hence are often used in combination with distance representations to yield a fairly suitable and complete representation of the environment \cite{chen2015survey}. Like with the direction representations this calculi also lacks temporal data in the encoded relations and is hence unsuitable for applications involving moving objects.
+		\subsection{Distance Representations} The qualitative representation of spatial distance can be classified into two groups namely absolute and relative \cite{isli2000new}, \cite{chen2015survey}, \cite{cohn2001qualitative}, \cite{isli2001combining}. This classification is made solely on the basis of  the presence/absence of an extraneous referential object in the relation between two objects. This distinction can be clearly illustrated by the following example,`the distance between A and B is 8 meters' or `A is near B', this is a absolute approach as the distance is measured directly between two objects.Whereas saying that `A is closer to B than that to C' classifies as a relative approaches as this involves the comparison to a third object. Furthermore, it has been shown that absolute approaches	can be qualitative or quantitative, but relative approaches are commonly qualitative \cite{cohn2001qualitative}.Qualitative calculi such as the ARGD (or Delta) and TPCC use the distance representations to describe the observable space. Distance based relations have found to be insufficient by themselves when it comes to the task of robot manipulation/navigation and hence are often used in combination with distance representations to yield a fairly suitable and complete representation of the environment \cite{chen2015survey}. Like with the direction representations this calculi also lacks temporal data in the encoded relations and is hence unsuitable for applications involving moving objects.
 		
 		\begin{figure}[h]
 			\centering
@@ -52,7 +52,7 @@
 		\begin{figure}[h]
 			\centering
 			\includegraphics[scale=1]{images/qtcb}
-			\caption{Basic relations of basic Qualitative Trajectory Calculus (QTCB) in a conceptual neighborhood diagram. The solid dots represent the stationary objects and the open dots represent the moving objects \cite{bibid}, \cite{de_weghe}.}
+			\caption{Basic relations of basic Qualitative Trajectory Calculus (QTCB) in a conceptual neighborhood diagram. The solid dots represent the stationary objects and the open dots represent the moving objects \cite{chen2015survey}, \cite{van2004representing}.}
 			\label{fig:qtcb}
 		\end{figure}		
 		
@@ -77,7 +77,7 @@
 						\multirow{2}{*}{Spatio-temporal} & QTC (Qualitative Trajectory Calculus)  \cite{van2005representing} & Points & It describes the possible relations among two moving points in terms of the front–back and left–right dichotomies. \\ \cline{2-4} 
 						& QRPC (Qualitative Rectilinear Projection Calculus)  \cite{glez2013qrpc} & Oriented points & It establishes the possible relations of an object with respect to the trajectory of another object depending on the cross-point of the trajectories and the relative position among them \\ \hline
 				\end{tabular}}
-			\caption{Table(from \cite{glez2013qrpc}) describing the key features of the more representative models(calculi) of qualitative representations of spatial or temporal domains in the existing literature.}
+			\caption{Table(identically reproduced from \cite{glez2013qrpc}) describing the key features of the more representative models(calculi) of qualitative representations of spatial or temporal domains in the existing literature.}
 			\end{adjustwidth}
 		\end{table}
 	
@@ -90,30 +90,31 @@
 %	write only theory here
 	\subsection{Qualitative Trajectory calculus}
 	\paragraph{}The QTC calculus was developed to solve the problem of inadequate representation of mobile objects in the spatio-temporal domain, which until then were represented only in the spatial domain using either the RCC or the n-intersections calculi \cite{van2006qualitative}, \cite{van2005qualitative}. The major drawbacks of those calculi was their failure to deal with temporal data. Hence mobile objects were often abstracted as stationary regions using either 'disconnected from' relation (DC) in RCC or 'disjoint' relation in the 9-intersection model, with the exception of a few limiting cases where the two objects meet, such as a collision between two mobile robots \cite{van2004representing}. Thus, the limiting factor of these formalisms was that all the DC relations were non-differentiable, due to the ignorance of information regarding relative motion between the two objects .
-	\paragraph{}The QTC calculus constitutes of two major variants the $QTC_B$ and the $QTC_C$, with the major difference between the two being the inclusion of the directional information in the relationships (between two objects) of the $QTC_C$ calculus. Both versions of the QTC are adept at dealing with qualitative movement of objects in one, two and three dimensions. The $QTC_B$ calculus, takes Euclidean distance between two objects as the only constraining dimension.The abstraction of movement is depicted using three qualitative values:
+	\paragraph{}The QTC calculus constitutes of two major variants the $QTC_B$ and the $QTC_C$, with the major difference between the two being the inclusion of the directional information in the relationships (between two objects) of the $QTC_C$ calculus. Both versions of the QTC are adept at dealing with qualitative movement of objects in one, two and three dimensions. The $QTC_B$ calculus, takes Euclidean distance between two objects as the only constraining dimension.The abstraction of movement is depicted using three qualitative values(all notations and definitions from \cite{van2004representing}, \cite{van2006qualitative}, \cite{van2005qualitative}):
+	
 	\begin{itemize}
-		\item 0: the object is stable with respect to the other object.
-		\item -: the object is moving towards the other object.
-		\item +: the object is moving away from the other object.
+		\item \textbf{0} : the object is stable with respect to the other object.
+		\item \textbf{-} : the object is moving towards the other object.
+		\item \textbf{+} : the object is moving away from the other object.
 	\end{itemize}
 	The assigning of these qualitative values to an object's movement depends upon the relative position (constrained by distance) and relative speed of the two objects with respect to each other. This can be illustrated by the following example, consider two objects `j' and `k', the possible values for `j' :
 	
 	\begin{itemize}
 		\item based on relative position at a time `t' are:
 		\begin{enumerate}
-			\item 0 (stable): if there is no change in the relative position with respect to `k' (no change in relative distance ).
+			\item \textbf{0} (stable): if there is no change in the relative position with respect to `k' (no change in relative distance ).
 			
-			\item - (moving towards): if there is a change in the relative position with respect to `k', such that the relative distance between the objects decreases.
+			\item \textbf{-} (moving towards): if there is a change in the relative position with respect to `k', such that the relative distance between the objects decreases.
 			
-			\item + (moving away): if there is a change in the relative position with respect to `k', such that the relative distance between the objects increases.
+			\item \textbf{+} (moving away): if there is a change in the relative position with respect to `k', such that the relative distance between the objects increases.
 		\end{enumerate}
 		\item based on relative speed at a time `t' are:
 		\begin{enumerate}
-			\item 0 (stable): if speed of `j' is equal to the speed of `k'.
+			\item \textbf{0} (stable): if speed of `j' is equal to the speed of `k'.
 			
-			\item - (moving towards): if speed of `j' is lesser than the speed of `k'.
+			\item \textbf{-} (moving towards): if speed of `j' is lesser than the speed of `k'.
 			
-			\item + (moving away): if speed of `j' is greater than the speed of `k'.
+			\item \textbf{+} (moving away): if speed of `j' is greater than the speed of `k'.
 		\end{enumerate}
 	\end{itemize}
 
@@ -131,28 +132,28 @@
 		\label{fig:qtcc}
 	\end{figure}
 
-	\paragraph{}The relations of the $QTC_C$ calculus, while following the same basic principles of the $QTC_B$, have been tweaked slightly to allow inferencing of the objects position in terms of the relative direction to the reference line. The assignment of the qualitative values to the object's movements can be illustrated using two objects `k' and `l', the possible values for `l' at any given time interval are based on the following reasoning:
+	\paragraph{}The relations of the $QTC_C$ calculus, while following the same basic principles of the $QTC_B$, have been tweaked slightly to allow inferencing of the objects position in terms of the relative direction to the reference line. The assignment of the qualitative values to the object's movements can be illustrated using two objects `k' and `l', the possible values for `l' at any given time interval are based on the following reasoning all notations and definitions from \cite{van2004representing}, \cite{van2006qualitative}, \cite{van2005qualitative}:
 	
 	\begin{itemize}
 		\item based on movement relative to the respective perpendicular reference line:
 		
 		\begin{enumerate}
-			\item 0 (stable): if there is no change in the relative distance with respect to `k' or with respect to the reference line. 
+			\item \textbf{0} (stable): if there is no change in the relative distance with respect to `k' or with respect to the reference line. 
 			
-			\item - (moving towards): if there is an increase in the relative distance between the objects.
+			\item \textbf{-} (moving towards): if there is an increase in the relative distance between the objects.
 			
-			\item + (moving away): if there is an increase in the relative distance between the objects.
+			\item \textbf{+} (moving away): if there is an increase in the relative distance between the objects.
 		\end{enumerate}
 	
 		\item  based on movement relative to the directed perpendicular reference line(from `l' to `k'):
 		
 		\begin{enumerate}
-			\item 0 (moving along the directed reference line): if the object moves
+			\item \textbf{0} (moving along the directed reference line): if the object moves
 			along the line segment or if it was moving along the left/right and continues to do so in the given time interval.
 			
-			\item - (moving to left side of the directed reference line): if the object moves from the right side of the line segment to the left side in the given time interval.
+			\item \textbf{-} (moving to left side of the directed reference line): if the object moves from the right side of the line segment to the left side in the given time interval.
 			
-			\item + (moving to right side of the directed reference line): if the object moves from the left side of the line segment to the right side in the given time interval.
+			\item \textbf{+} (moving to right side of the directed reference line): if the object moves from the left side of the line segment to the right side in the given time interval.
 		\end{enumerate}
 	
 	\end{itemize}
@@ -162,7 +163,7 @@
 	\paragraph{Conclusion}To conclude, the $QTC_B$ calculi is a basic and restrictive representation that encodes only the motion of the object and not its direction of movement. Yet, this restriction allows for a more assured set of relations that do not encode any ambiguity corresponding to the relative motion of the objects in question \cite{van2004representing}. The $QTC_C$ on the other hand does not provide distinctive relations to distinguish between the trajectories of a mobile object moving along the directed reference line and continuing to do so and a mobile object moving on either side of the directed reference line and continuing to do so \cite{van2005qualitative}. Therefore leading to a rather ambiguous interpretation of the direction of the object's relative motion, factor into this the fact that we will implement it on a robot in a live environment and it becomes clear that there will be numerous cases of collision that could endanger the safety of the robot as well as the other agents that lie in its vicinity.  Hence justifying the selection of $QTC_B$ for our implementation, not only is it safer and simpler but it also allows easier integration with other complimentary calculi such as ARGD, RCC which may be used to deal with possible collision cases.
 
 	\subsection{Qualitative Rectilinear Projection calculus}
-	\paragraph{}The qualitative rectilinear projection calculus (QRPC) \cite{glez2013qrpc}, \cite{alvarez2006guide},  \cite{delafontaine2011implementing} presents an innovative approach to qualitatively representing motion patterns based on planar trajectories. In comparison to the QTC calculus, this representation has a richer description of the motion exhibited by mobile objects. The basis of this claim lies in the oriented rectilinear projection used to represent the trajectories, which allows this calculus to represent rotational motions of an mobile object, something that was not possible in the existing calculi such as the QTC. The QRPC is specifically tailored towards obstacle avoidance and geometric relationships between two objects are generated using the front-back and the left-right dichotomies. The relationships encompassed in the QRPC abstract the objects as points and use their rectilinear projections to make qualitative distinctions such as front-back and left-right, these atomic relations and their base notations are illustrated below:
+	\paragraph{}The qualitative rectilinear projection calculus (QRPC) \cite{glez2013qrpc}, \cite{alvarez2006guide},  \cite{delafontaine2011implementing} presents an innovative approach to qualitatively representing motion patterns based on planar trajectories. In comparison to the QTC calculus, this representation has a richer description of the motion exhibited by mobile objects. The basis of this claim lies in the oriented rectilinear projection used to represent the trajectories, which allows this calculus to represent rotational motions of an mobile object, something that was not possible in the existing calculi such as the QTC. The QRPC is specifically tailored towards obstacle avoidance and geometric relationships between two objects are generated using the front-back and the left-right dichotomies. The relationships encompassed in the QRPC abstract the objects as points and use their rectilinear projections to make qualitative distinctions such as front-back and left-right, these atomic relations and their base notations are illustrated below (all notations and definitions from \cite{glez2013qrpc}) :
 	
 	\begin{enumerate}
 		\item \textbf{Notations:}
@@ -170,10 +171,10 @@
 		\begin{itemize}
 			\item $P_iP_j$: is the relative disposition between the oriented rectilinear	projection of the object $O_i$ and the oriented rectilinear projection of $O_j$.
 			\item $O_iO_j^{LR}$: The relative position of $O_i$ with respect to the left-right dichotomy of $O_j$.
-			\item $({CO_i}^{FB})({CO_j}^{FB})$: The relative position of the point of intersection(`C') of the oriented rectilinear projections with respect to the front–back dichotomy of both objects.
+			\item $({CO_i}^{FB})({CO_j}^{FB})$: The relative position of the point of intersection(`C') of the oriented rectilinear projections with respect to the front-back dichotomy of both objects.
 			\item $O_iO_j^{FB}$:  The relative position of $O_i$ with respect to the front-back dichotomy of $O_j$ when the trajectories are superimposed.
 			
-			Note: `i' and `j' denote the two different objects.
+			\paragraph{Note:} `i' and `j' denote the two different objects.
 		\end{itemize}
 		
 		\item \textbf{Qualitative relations (atomic) in each of the notations :}
@@ -191,9 +192,9 @@
 			\item The relative position of $O_i$ with respect to the left-right
 			dichotomy of $O_j$, ($O_iO_j^{LR}$):
 			\begin{itemize}
-				\item `-' : if $O_i$ is on the left of $P_j$.
-				\item `0' : if $O_i$ is over $P_j$.
-				\item `+' : if $O_i$ is on the right of $P_j$.
+				\item \textbf{-} : if $O_i$ is on the left of $P_j$.
+				\item \textbf{0} : if $O_i$ is over $P_j$.
+				\item \textbf{+} : if $O_i$ is on the right of $P_j$.
 				
 				\begin{figure}[h]
 					\centering
@@ -227,9 +228,9 @@
 			\end{itemize}
 		\item The relative position of $O_i$ with respect to the front-back dichotomy of $O_j$ when the trajectories are superimposed($O_iO_j^{FB}$):
 		\begin{itemize}
-			\item `+' : if $O_i$ is in front of $O_j$ after $P_i$ is superimposed on $P_j$.
-			\item `0' : if $O_i$ is at the same position as $O_j$ after $P_i$ is superimposed on $P_j$.
-			\item `-' : if $O_i$ is behind $O_j$ after $P_i$ is superimposed on $P_j$.	
+			\item \textbf{+} : if $O_i$ is in front of $O_j$ after $P_i$ is superimposed on $P_j$.
+			\item \textbf{0} : if $O_i$ is at the same position as $O_j$ after $P_i$ is superimposed on $P_j$.
+			\item \textbf{-} : if $O_i$ is behind $O_j$ after $P_i$ is superimposed on $P_j$.	
 			
 			
 			Note: The after the rectilinear projection of $O_i$ is rotated(such that the objects are always facing in opposing directions) along `C' if it exists, before being superimposed on the rectilinear projection of $O_j$.		
@@ -335,7 +336,7 @@
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale = 0.6]{images/graph}
-		\caption{Situation Graph Tree of the human motion behaviour and relative robot actions \cite{bellotto2012robot}.\textcolor{blue}{explain the state and transitions}}
+		\caption{Situation Graph Tree describing the scenario, ` person k moves towards the robot l,	then stops for a moment. While, the robot starts to approach the person. The human, however turns back and leaves, so the robot stops'. Each of the situations are temporally connected (via the edges) to the next one. Each situation is encoded with the action to be performed by the agent when in that particular state \cite{bellotto2012robot}.}
 		\label{fig:graph}
 	\end{figure}
 	

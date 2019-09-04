@@ -21,22 +21,22 @@ class vel_control:
             twist.linear.y = 0
         if control_cmd == 'Move Left':
             twist.linear.x = 0.1
-            twist.linear.y = 0.06
+            twist.linear.y = 0.04
         if control_cmd == 'Move Left Slowly':
             twist.linear.x = 0.1
-            twist.linear.y = 0.04
+            twist.linear.y = 0.02
         if control_cmd == 'Move Left Quickly':
             twist.linear.x = 0.1
-            twist.linear.y = 0.08
+            twist.linear.y = 0.06
         if control_cmd == 'Move Right':
             twist.linear.x = 0.1
-            twist.linear.y = -0.06
+            twist.linear.y = -0.04
         if control_cmd == 'Move Right Slowly':
             twist.linear.x = 0.1
-            twist.linear.y = -0.04
+            twist.linear.y = -0.02
         if control_cmd == 'Move Right Quickly':
             twist.linear.x = 0.1
-            twist.linear.y = -0.08
+            twist.linear.y = -0.06
 
         print('Vel control: {}, twist: {}'.format(control_cmd, twist))
 

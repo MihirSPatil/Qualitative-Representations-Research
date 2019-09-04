@@ -1,0 +1,9 @@
+Common observations:
+*All the movements observed during the experiments are gradual and there is no sudden change to the robot's velocity or speed.
+*The QTCB calculus vastly outperforms the ARGD calculus in the navigation experiments, this is mainly due to the fact that the QTC caculus is specifically designed for obtaining relations between two or more moving objects, whereas the ARGD calculus is not.
+*The algorithm can be made more robust if the ARGD and the QTCB calculus can be combined, this is possible with the current implementation but is complicated as the number of rulesets would increase exponentially with respect to the objects in consideration.
+*In the current setup the algorithm is inherently dependent on the perception module and any chages to this module would likely warrant changes to the entire setup especially in the case of the distance based ARGD calculus, the QTCB calculus on the other hand would only require that the number of objects in consideration be changed to the desired number.
+*The current setup uses small velocity values to control the robot with the maximum value being 0.1 m/s and the lowest being 0.02 m/s.
+*Improvements to the current algorithm can also be made using different setup of the cameras where two cameras facing the opposite wall may be used.
+*The current implementation also uses a time based filter to build realtions only when two or more markers are detected simultaneously at similar timesteps, in cases where only a single object is used to build the relation with the robot this filtering must be removed to ensure successfull navigation.
+*Also if more than two objects are to be used when calculating the motion updates then, filtering has to be done to ensure that there is no repitition when building the relations that are consequently used for the decision making process.

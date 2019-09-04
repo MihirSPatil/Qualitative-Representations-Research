@@ -49,8 +49,8 @@ class pose_extractor:
         poseExtracted.pose_vec.position.x = tvec[0][0][0]
         poseExtracted.pose_vec.position.y = tvec[0][0][1]
         poseExtracted.pose_vec.position.z = tvec[0][0][2]
-        # poseExtracted.header.stamp = rospy.Time.now()
-        poseExtracted.header = data.header
+        poseExtracted.header.stamp = rospy.Time.now()
+        # poseExtracted.header = data.header
 
         if (self.prev_marker_id is None and self.pub_flag is True):
             poseExtracted.marker_id = ids[0][0]
@@ -89,13 +89,13 @@ class pose_extractor:
 
     '''commment the following lines to stop seeing the image output in a seperate window'''
 
-    cv.imshow("Image window", frame)
-    self.keystroke = cv.waitKey(1)
-    if 32 <= self.keystroke and self.keystroke < 128:
-        cc = chr(self.keystroke).lower()
-        if cc == 'q':
-            # The user has press the q key, so exit
-            rospy.signal_shutdown("User hit q key to quit.")
+    # cv.imshow("Image window", frame)
+    # self.keystroke = cv.waitKey(1)
+    # if 32 <= self.keystroke and self.keystroke < 128:
+    #     cc = chr(self.keystroke).lower()
+    #     if cc == 'q':
+    #         # The user has press the q key, so exit
+    #         rospy.signal_shutdown("User hit q key to quit.")
 
 
 def main(args):

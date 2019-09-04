@@ -31,7 +31,7 @@ class argd_interpreter:
         self.pose_sub1 = message_filters.Subscriber("extracted_pose1",PoseMsg)
         self.pose_sub2 = message_filters.Subscriber("extracted_pose2",PoseMsg)
         self.cln = QSRlib_ROS_Client()
-        # the update rate for the ApproximateTimeSynchronizer is 0.1 and the queue_size is 10
+        # the update rate for the ApproximateTimeSynchronizer is 0.1 and the queue_size is 3
         self.ts = message_filters.ApproximateTimeSynchronizer([self.pose_sub1, self.pose_sub2], 3, 0.1)
         self.ts.registerCallback(self.relations_callback)
 

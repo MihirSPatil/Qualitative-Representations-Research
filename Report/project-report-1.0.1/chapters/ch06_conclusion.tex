@@ -1,0 +1,20 @@
+%!TEX root = ../PatilM-[RnD-MT]Report.tex
+
+\chapter{Conclusions}
+
+\section{Contributions}
+\paragraph{}The project contributes towards the utilization of qualitative spatial representations in mobile robot navigation by presenting a generalized framework for this specific task. The framework is modular since each of its components(perception, representation, control) can easily be cloned and adapted to integrate additional behaviors such as turning around, dealing with corners etc. by adding a new controller to the existing implementation. Furthermore by using a comprehensive library of qualitative spatial representations (QSRLib) we provide the user with a wide selection of qualitative calculi to effectively address their needs.
+
+\paragraph{}The comparative evaluation of the developed approach against a quantitative map based representation also highlights the benefits of utilizing qualitative representations especially in terms of the computational efficiency. This comparison effectively shows conclusive proof that qualitative spatial representations are computationally more efficient (albeit by only a small amount) hence addressing the issue stated previously in the `State of the Art' section of exactly how efficient are qualitative representations in comparison to quantitative representations. 
+
+\section{Lessons learned}
+
+\paragraph{} From the conclusion and analysis of the entire project it is clear that the advantages of qualitative representations lie in the dealing with imprecise raw data, but it should be noted that these representations aren't a replacement for quantitative representation instead they are simply an alternative that can be harnessed to deal with scenarios where the need for crisp, precise data cannot be justified such as traversal in a fairly empty open spaces(halls, corridors etc.). Precise quantitative representations are still necessary when dealing with scenarios such as passing through a door.
+
+
+\section{Future work}
+\paragraph{} The perception module implemented in this project relies on Aruco markers to abstract spatial data and build relations among the spatial entities and the robot, a future direction would be to remove this dependency on the markers and move towards more generalized approaches such as scene segmentation, template matching and optical flow to extract high dimensional data and create abstractions of spatial entities that can be used to build qualitative relations with the robot. 
+
+\paragraph{} The current implementation of the representation module is hard coded to build qualitative relations amongst at-least three (objects including the robot), in the future this could be made dynamic based on the user's preferences.
+
+\paragraph{}While the implementation works on a local planner level, future directions would include integrating the approach into a global planner. As seen from the concluding paragraph of section 5.5 further work has to be done to make the current implementation more efficient in terms of dealing with repeated motion updates amongst consecutive time steps, while also finding a better way to accurately collect the battery statistics which will enable a more through evaluation of the efficiency paradigm in relation to power consumption.

@@ -1,33 +1,28 @@
-%!TEX root = ../report.tex
+%!TEX root = ../PatilM-[RnD-MT]Report.tex
 
 \chapter{Introduction}
+This project deals with the utilization of qualitative spatial representations for the task of robot navigation in a corridor environment. Qualitative spatial representations refer to human level abstractions \cite{cohn2008qualitative} of the physical space and the spatial entities that occupy this space, these abstractions may be based on any primitive spatial transforms such as distance, direction, size, shape etc. Depending upon the primitive used, concise and descriptive relations([left-right],[near-far]) between the spatial entities are built which can then be used for reasoning and performing specific actions depending upon the task at hand.
+Since we explore the utility and efficiency of such representations from a robot navigation perspective our focus lies on two specific modules that are crucial for any navigation task, namely perception and control. 
 
-\lipsum[1-5]
+
 \section{Motivation}
-\subsection{...}
+\paragraph{}While qualitative representations have been used almost extensively in the field of GIS (geographical information systems) \cite{van2006qualitative}for numerous years, their utilization in the field of robotics has been comparatively limited. Some of the reasons that impede the widespread usage of qualitative representations in robotics are: 
+\begin{itemize}
+	\item The lack of a framework for effective utilization of the qualitative representation in robotics.
+	
+	\item The existence of a vast number of calculi or models that exist for each spatial primitive and the lack of comprehensive details for each makes it difficult to implement them in a generalized manner. \cite{cohn2001qualitative}, \cite{chen2015survey}.
+	
+	\item The abstract nature of these high level representations which obfuscates precise numerical data \cite{musto1999qualitative}.
+\end{itemize}
 
-\lipsum[6-10]
+\paragraph{}The abstract nature of qualitative representations isn't necessarily a drawback as it allows representation to better compensate for vague data \cite{musto1999qualitative}, this in turn presents a pleasant advantage in the form of being more robust to noisy data. Consider a crowded lobby environment that is constantly changing due to the constant movement of a large number of people, in such as scenario qualitative representations are instantly useful \cite{fraser2004application}, as precise metric maps or precise trajectories may fail due to the constant and often unprecedented change to the environment \cite{shah2013qualitative}. Additionally, \cite{musto1999qualitative} conclusively states that quantitative representations(precise numerical representations) compute up-to an unnecessary level of accuracy, their interpretation of the physical space. Though this is useful in conditions where highly precise control of the robot's trajectory is required, it becomes an unwanted hindrance elsewhere due to the highly precise and numerical manner in which the environment and the spatial entities are depicted. Not only is this unintuitive to a human agent it also requires excessive computational resources (inefficient) \cite{musto1999qualitative}, \cite{blackwell1988spatial},  \cite{shah2013qualitative}to get the representation of every spatial entity exactly right. 
 
-\subsection{...}
+\paragraph{} Consider the case of a robot tasked with driving along a corridor towards its end while avoiding collision with the walls. In such a scenario where precise quantitative representations are deemed surplus to requirements,the robot  can be controlled using qualitative representations for the perceived physical space. The significant benefit of using a qualitative representation is that we no longer trying to follow a preplanned, precisely controlled trajectory. Therefore eliminating the need to constantly issue control commands. This implies that a qualitative approach would be more efficient \cite{chen2015survey} (in terms of CPU and battery usage \cite{wakita1995intelligent}).
 
-
-\section{Challenges and Difficulties}
-\subsection{...}
-
-\lipsum[11-15]
-
-\subsection{...}
-
-\subsection{...}
-
+\paragraph{} Moreover, the manner in which people convey simple navigation tasks amongst themselves is through the use of estimated high-level spatial relations, with respect to observable landmarks \cite{michon2001and} \cite{chen2015survey} , for instance, `walk past the computers and take a left at the elevator') \cite{shah2013qualitative}. As qualitative representations also use such high level abstractions, by deploying them we would be emulating a similar communication pattern which in turn facilitates a better human robot interaction \cite{dondrup2015computational}. Also as stated by `Alan Blackwell' in his thesis \cite{blackwell1988spatial} of this subject ` high level robot programming should be carried out without having to refer to numeric data'. Naturally humans perform their actions without wondering or reasoning about these actions in terms of precise numeric values such as Cartesian co-ordinates or joint angles. Thus non-numeric terms or notations must also be applied when dealing in the domain of high level programming for robotics. In an optimal scenario this would mean describing a task to a robot using symbols or terms, that are commonly used when describing the same task to another human.
 
 
 \section{Problem Statement}
-\subsection{...}
-
-\lipsum[21-30]
-
-\subsection{...}
+\paragraph{} The fundamental definition of our problem statement would be to develop a generalized and modular framework that  achieves collision-free (with respect to the walls) navigation in a corridor environment using robust features from the surrounding walls to develop qualitative representations that effectively model the common-sense level relationships amongst the features as well as the robot, and further utilize these relationships to evaluate and infer the instantaneous motion of the robot in order to facilitate corrective updates to its motion while also comparing the efficiency paradigm against a non-qualitative approach to provide tangible proof that support the claim of better efficiency for qualitative representations.
 
 
-\subsection{...}

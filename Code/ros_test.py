@@ -48,7 +48,11 @@ if __name__ == "__main__":
     # multiple = options[:]; multiple.remove("multiple"); multiple.remove("argprobd"); multiple.remove("cardir"); multiple.remove("mwe"); multiple.remove("qtcbs"); multiple.remove("qtccs"); multiple.remove("rcc2"); multiple.remove("rcc3"); multiple.remove("rcc4"); multiple.remove("ra"); multiple.remove("tpcc"); multiple.remove("rcc8");
 
     #defining the qsr's for which to calculate the spatial realtionships, can change the selected qsr's by just changing the index nos.
+<<<<<<< HEAD
+    multiple = [options[0], options[6], options[7]]
+=======
     multiple = options[0], options[6]
+>>>>>>> b2b9c1c3ff5605d5c4b5c6e7bc6d3819f3e58fc9
 
     #converting the tuple to a list
     multiple = list(multiple)

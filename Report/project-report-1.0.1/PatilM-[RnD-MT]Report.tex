@@ -1,0 +1,114 @@
+%
+% LaTeX2e Style for MAS R&D and master thesis reports
+% Author: Argentina Ortega Sainz, Hochschule Bonn-Rhein-Sieg, Germany
+% Please feel free to send issues, suggestions or pull requests to:
+% https://github.com/mas-group/project-report
+% Based on the template created by Ronni Hartanto in 2003
+%
+
+ \documentclass[rnd]{mas_report}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{subfig}
+\usepackage{siunitx}
+\usepackage{rotating}
+\usepackage{float}
+\usepackage{longtable}
+\newcommand\nomenclature[3]{#1 & #2 & #3 \\}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks = true,
+	allcolors=black}
+
+% ****************************************************
+% THIS INFORMATION SHOULD BE UPDATED FOR YOUR REPORT
+% ****************************************************
+\author{Mihir Patil}
+\title{Qualitative Perception and Control of Mobile Platforms}
+\supervisors{%
+Prof. Dr. Paul Pl{\"o}ger\\
+Nico Huebel\\
+Santosh Thoduka
+}
+\date{January  2019}
+
+
+\thirdpartylogo{"images/KU Leuven logo"}
+
+\begin{document}
+\begin{titlepage}
+    \maketitle
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	PREFACE
+%----------------------------------------------------------------------------------------
+
+\pagestyle{plain}
+
+
+\cleardoublepage
+\statementpage
+
+\begin{abstract}
+\paragraph{}The objective of this project is to evaluate a qualitative approach for perception and control of a mobile platform, in the context of improving efficiency for the task of robot navigation. Existing techniques for robot navigation try to extract all the information from the environment and represent it in a highly precise numerical manner to aid the design and deployment of pre-planned path trajectories. This leads to a prolix of information that the robot will have to process in order to execute a single action, thus highlighting a grossly inefficient manner of representing and utilizing raw environmental data especially in the case of vision based navigation. We present a generalized framework that uses qualitative spatial representations to abstract relative distance and motion data between two objects and further utilizes this to infer the robot's trajectory, thus enabling it to control the motion of the robot via suitable motion updates. We evaluate our approach against a quantitative map based representation to determine the validity of the claims of improved efficiency that are often associated with qualitative representations.
+\end{abstract}
+
+\begin{acknowledgements}
+\paragraph{}I would like to express my sincere gratitude towards  all those who provided me the guidance and motivation to complete this project.  I would especially like to thank Nico Heubel and Santosh Thoduka, for their simulating discussions and suggestions
+that helped me overcome various hurdles associated with the development and completion of this project.
+\end{acknowledgements}
+
+\newpage
+\chapter*{Abbrevations}
+\begin{longtable}{@{}p{3cm}@{}p{1cm}@{}p{\dimexpr\textwidth-1cm\relax}@{}}
+	\label{QTC}\nomenclature{\textbf{QTC}}{-}{Qualitative Trajectory Calculus }%
+	\label{CDC}\nomenclature{\textbf{CDC}}{-}{Cardinal Direction Calculus}%
+	\label{QRPC}\nomenclature{\textbf{QRPC}}{-}{Qualitative Rectilinear Projection Calculus}%
+	\label{CyCord}\nomenclature{\textbf{CyCord}}{-}{Cyclic Ordering}%
+	\label{RCC}\nomenclature{\textbf{RCC}}{-}{Region Connection Calculus}%
+	\label{ARGD}\nomenclature{\textbf{ARGD/QDC}}{-}{Qualitative Distance Calculus}%
+	\label{OPRA}\nomenclature{\textbf{OPRA}}{-}{Oriented Point Algebra}%      
+	\label{TPCC}\nomenclature{\textbf{TPCC}}{-}{Ternary Point Configuration Calculus}%
+\end{longtable}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+%-------------------------------------------------------------------------------
+%	CONTENT CHAPTERS
+%-------------------------------------------------------------------------------
+
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+\pagestyle{mainmatter}
+
+\subfile{chapters/ch01_introduction}
+\subfile{chapters/ch02_stateoftheart}
+\subfile{chapters/ch03_solution}
+\subfile{chapters/ch04_methodology}
+\subfile{chapters/ch05_results}
+\subfile{chapters/ch06_conclusion}
+
+
+%-------------------------------------------------------------------------------
+%	APPENDIX
+%-------------------------------------------------------------------------------
+
+%\begin{appendices}
+%\subfile{chapters/appendix}
+%
+%\end{appendices}
+
+\backmatter
+
+%-------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%-------------------------------------------------------------------------------
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{plainnat} % Use the plainnat bibliography style
+\bibliography{bibliography} % Use the bibliography.bib file as the source of references
+
+\end{document}
